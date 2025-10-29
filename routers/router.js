@@ -9,7 +9,7 @@ const { postStudent,putSetStudent,putPullStudent, putPushStudent, deleteOneStude
 
 
 
-studentRouter.post('/', postStudent)
+studentRouter.post('/create', postStudent)
 studentRouter.get('/', getAllStudent)
 studentRouter.get('/:_id', getOneStudent)
 studentRouter.put('/push/:_id/:object', putPushStudent)
