@@ -10,7 +10,7 @@ const { studentRouter } = require("./routers/router");
 
 
 const corsConfig = {
-    origin : ["*"],
+    origin : ["https://attasfiyah-portal.vercel.app"],
     credential : true,
     methods : ["GET","POST","PUT","DELETE"],
     headers:["*"]
