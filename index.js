@@ -9,7 +9,7 @@ const mongoose = require("mongoose")
 
 
 const corsConfig = {
-    origin : ["https://eruditeonlineacademy.vercel.app"],
+    origin : ["https://attasfiyah-portal.vercel.app"],
     credential : true,
     methods : ["GET","POST","PUT","DELETE"],
     headers:["*"]
@@ -22,9 +22,9 @@ app.use(express.urlencoded({
     extended:true
 }))
 
-//mongoose.connect(process.env.secret).
-//then(()=> console.log("connected to database now")).
-//catch(err => console.log(err))
+mongoose.connect(process.env.KEY).
+then(()=> console.log("connected to database now")).
+catch(err => console.log(err))
 
 
 app.get("/",(req,res)=>{
