@@ -4,7 +4,8 @@ const express  = require("express");
 const Port = process.env.PORT || 3000
 const app = express()
 const cors = require("cors");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const { studentRouter } = require("./routers/router");
 
 
 
@@ -32,7 +33,7 @@ app.get("/",(req,res)=>{
 })
 
 
-
+app.use("/student", studentRouter)
 
 
 
