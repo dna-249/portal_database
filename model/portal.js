@@ -22,7 +22,7 @@ const mongoose = require("mongoose")
     HURUF:[{ CA1:{type:String}, CA2:{type:String}, Ass:{type:String}, Exam:{type:String }}],
 
   
-    moralEthics: {type:String},
+/*  moralEthics: {type:String},
     punctuality:{type:String},
     handWriting: {type:String},
     honesty: {type:String},
@@ -32,7 +32,7 @@ const mongoose = require("mongoose")
     initiative:{type:String},
     politeness: {type:String},
     headRemark: {type:String},
-    classTeacherRemark:{type:String},
+    classTeacherRemark:{type:String},*/
 });
 
 const Portal = mongoose.model("portal",studentData)
