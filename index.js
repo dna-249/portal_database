@@ -28,7 +28,7 @@ catch(err => console.log(err))
 
 
 app.get("/",(req,res)=>{
-    res.sendStatus("hello from backend")
+    res.send("hello from backend")
 })
 
 
