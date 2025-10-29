@@ -3,7 +3,7 @@ const { Portal} = require("../model/portal")
 
 
 const postStudent = async(req,res) => {
-    const {school,studentName, classes, term, session, admissionNo, sex,subjects,age } = req?.body
+    const {school,studentName, classes, term, session, admissionNo, sex,subjects,age } = req?.body?.postPayload
 
     const sub = subjects.reduce((accumulator, subject) => {
     // A. Clean Key Generation
