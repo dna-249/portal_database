@@ -9,9 +9,8 @@ const postStudent = async(req,res) => {
     const {   moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
    classTeacherRemark,  school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
 
-    
 
-    await Portal.create({
+     const newStudent = await Portal.create({
     school: school,
     studentName:studentName,
     class:classes,
@@ -20,20 +19,8 @@ const postStudent = async(req,res) => {
     admissionNo:admissionNo,
     age: age,
     sex: sex,
-    
-    QURAN:[{ CA1:subjects?.QURAN.CA1, CA2:subjects?.QURAN.CA2, Ass:subjects?.QURAN.Ass, Exam:subjects?.QURAN.Exam}],
-    TAJWEED:[{CA1:subjects?.TAJWEED.CA1, CA2:subjects?.TAJWEED.CA2, Ass:subjects?.TAJWEED.Ass,  Exam:subjects?.TAJWEED.Exam}],
-    TAUHEED:[{CA1:subjects?.TAUHEED.CA1, CA2:subjects?.TAUHEED.CA2, Ass:subjects?.TAUHEED.Ass,  Exam:subjects?.TAUHEED.Exam}],
-    FIQH:[{CA1:subjects?.FIQH.CA1,  CA2:subjects?.FIQH.CA2, Ass:subjects?.FIQH.Ass, Exam:subjects?.FIQH.Exam}],
-    HADITH:[{CA1:subjects?.HADITH.CA1, CA2:subjects?.HADITH.CA2, Ass:subjects?.HADITH.Ass,  Exam:subjects?.HADITH.Exam}],
-    ARABIC:[{CA1:subjects?.ARABIC.CA1, CA2:subjects?.ARABIC.CA2, Ass:subjects?.ARABIC.Ass,  Exam:subjects?.ARABIC.Exam}],
-    AZKHAR:[{CA1:subjects?.AZKHAR.CA1, CA2:subjects?.AZKHAR.CA2, Ass:subjects?.AZKHAR.Ass,  Exam:subjects?.AZKHAR.Exam}],
-    SIRAH:[{CA1:subjects?.SIRAH.CA1, CA2:subjects?.SIRAH.CA2, Ass:subjects?.SIRAH.Ass,  Exam:subjects?.SIRAH.Exam}],
-    HURUF:[{CA1:subjects?.HURUF.CA1, CA2:subjects?.HURUF.CA2, Ass:subjects?.HURUF.Ass,  Exam:subjects?.HURUF.Exam}],
 
     
-
-  
    moralEthics:  moralEthics,
    punctuality:punctuality,
    handWriting: handWriting,
@@ -47,6 +34,7 @@ const postStudent = async(req,res) => {
    classTeacherRemark: classTeacherRemark,
         
                  })
+     putPushStudent(subjects,newStudent)
                  res.json("successfully uploaded")
         } catch (error) {
         console.log(error)
@@ -104,34 +92,29 @@ const putPullStudent = async (req,res) => {
                     
 }
 
-const putPushStudent = async (req,res) => {
+const putPushStudent = async (subjects,id) => {
 try {
-    const {_id} = req.params
-    const {object} = req.params
-    const {date, subject, message,myId}= req.body;
-    if(typeof date !== "undefined"){
-    const student = await Student.findByIdAndUpdate({_id:_id},{
+    
+        await Portal.findByIdAndUpdate({_id:id?._id},{
         $push:{
-          [`${object}`]:[
-                {
-                    date:date,
-                    subject:subject,
-                    message:message,
-                    myId:myId
-                }]
+        QURAN:[{ CA1:subjects?.QURAN.CA1, CA2:subjects?.QURAN.CA2, Ass:subjects?.QURAN.Ass, Exam:subjects?.QURAN.Exam}],
+        TAJWEED:[{CA1:subjects?.TAJWEED.CA1, CA2:subjects?.TAJWEED.CA2, Ass:subjects?.TAJWEED.Ass,  Exam:subjects?.TAJWEED.Exam}],
+        TAUHEED:[{CA1:subjects?.TAUHEED.CA1, CA2:subjects?.TAUHEED.CA2, Ass:subjects?.TAUHEED.Ass,  Exam:subjects?.TAUHEED.Exam}],
+        FIQH:[{CA1:subjects?.FIQH.CA1,  CA2:subjects?.FIQH.CA2, Ass:subjects?.FIQH.Ass, Exam:subjects?.FIQH.Exam}],
+        HADITH:[{CA1:subjects?.HADITH.CA1, CA2:subjects?.HADITH.CA2, Ass:subjects?.HADITH.Ass,  Exam:subjects?.HADITH.Exam}],
+        ARABIC:[{CA1:subjects?.ARABIC.CA1, CA2:subjects?.ARABIC.CA2, Ass:subjects?.ARABIC.Ass,  Exam:subjects?.ARABIC.Exam}],
+        AZKHAR:[{CA1:subjects?.AZKHAR.CA1, CA2:subjects?.AZKHAR.CA2, Ass:subjects?.AZKHAR.Ass,  Exam:subjects?.AZKHAR.Exam}],
+        SIRAH:[{CA1:subjects?.SIRAH.CA1, CA2:subjects?.SIRAH.CA2, Ass:subjects?.SIRAH.Ass,  Exam:subjects?.SIRAH.Exam}],
+        HURUF:[{CA1:subjects?.HURUF.CA1, CA2:subjects?.HURUF.CA2, Ass:subjects?.HURUF.Ass,  Exam:subjects?.HURUF.Exam}],
+
+    
         }
     })
-      res.status(200).json(student)}
-     
-      else{
-        const student = await Student.findByIdAndUpdate({_id:_id}, req.body)
-        res.status(200).json(student)
-      }
+     console.log("is working")
     } catch (error) {
         console.log(error) 
      }  
-}
-
+    }
 const putSetStudent = async (req,res) => {
     const {_id} = req.params;
     const {object} = req.params;
