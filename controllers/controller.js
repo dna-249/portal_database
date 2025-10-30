@@ -6,7 +6,8 @@ const postStudent = async(req,res) => {
 
     try {
    
-    const {school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
+    const {   moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
+   classTeacherRemark,  school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
 
     const sub = subjects?.reduce((accumulator, subject) => {
     // A. Clean Key Generation
@@ -52,17 +53,17 @@ const postStudent = async(req,res) => {
     
 
   
-   // moralEthics: {type:String},
-   // punctuality:{type:String},
-   // handWriting: {type:String},
-   // honesty: {type:String},
-  //  fluency: {type:String},
-   // selfControl: {type:String},
-  //  responsibility:{type:String},
-  //  initiative:{type:String},
-  //  politeness: {type:String},
-   // headRemark: {type:String},
-   // classTeacherRemark:{type:String},
+   moralEthics:  moralEthics,
+   punctuality:punctuality,
+   handWriting: handWriting,
+   honesty: honesty,
+   fluency: fluency,
+   selfControl: selfControl,
+   responsibility:responsibility,
+   initiative:initiative,
+   politeness: politeness,
+   headRemark: headRemark,
+   classTeacherRemark: classTeacherRemark,
         
                  })
                  res.json("successfully uploaded")
