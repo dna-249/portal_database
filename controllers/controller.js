@@ -40,15 +40,15 @@ const postStudent = async(req,res) => {
     age: age,
     sex: sex,
     
-    // QURAN:[{ CA1:sub?.QURAN.CA1, CA2:sub?.QURAN.CA2, Ass:sub?.QURAN.Ass, Exam: sub?.QURAN.Exam}],
-    // TAJWEED:[{CA1:sub?.TAJWEED.CA1, CA2:sub?.TAJWEED.CA2, Ass:sub?.TAJWEED.Ass,  Exam:sub?.TAJWEED.Exam}],
-    // TAUHEED:[{CA1:sub?.TAUHEED.CA1, CA2:sub?.TAUHEED.CA2, Ass:sub?.TAUHEED.Ass,  Exam:sub?.TAUHEED.Exam}],
-    // FIQH:[{CA1:sub?.FIQH.CA1,  CA2:sub?.FIQH.CA2, Ass:sub?.FIQH.Ass, Exam:sub?.FIQH.Exam}],
-    // HADITH:[{CA1:sub?.HADITH.CA1, CA2:sub?.HADITH.CA2, Ass:sub?.HADITH.Ass,  Exam:sub?.HADITH.Exam}],
-    // ARABIC:[{CA1:sub?.ARABIC.CA1, CA2:sub?.ARABIC.CA2, Ass:sub?.ARABIC.Ass,  Exam:sub?.ARABIC.Exam}],
-    // AZKHAR:[{CA1:sub?.AZKHAR.CA1, CA2:sub?.AZKHAR.CA2, Ass:sub?.AZKHAR.Ass,  Exam:sub?.AZKHAR.Exam}],
-    // SIRAH:[{CA1:sub?.SIRAH.CA1, CA2:sub?.SIRAH.CA2, Ass:sub?.SIRAH.Ass,  Exam:sub?.SIRAH.Exam}],
-    // HURUF:[{CA1:sub?.HURUF.CA1, CA2:sub?.HURUF.CA2, Ass:sub?.HURUF.Ass,  Exam:sub?.HURUF.Exam}],
+    QURAN:[{ CA1:sub?.QURAN.CA1, CA2:sub?.QURAN.CA2, Ass:sub?.QURAN.Ass, Exam: sub?.QURAN.Exam}],
+    TAJWEED:[{CA1:sub?.TAJWEED.CA1, CA2:sub?.TAJWEED.CA2, Ass:sub?.TAJWEED.Ass,  Exam:sub?.TAJWEED.Exam}],
+    TAUHEED:[{CA1:sub?.TAUHEED.CA1, CA2:sub?.TAUHEED.CA2, Ass:sub?.TAUHEED.Ass,  Exam:sub?.TAUHEED.Exam}],
+    FIQH:[{CA1:sub?.FIQH.CA1,  CA2:sub?.FIQH.CA2, Ass:sub?.FIQH.Ass, Exam:sub?.FIQH.Exam}],
+    HADITH:[{CA1:sub?.HADITH.CA1, CA2:sub?.HADITH.CA2, Ass:sub?.HADITH.Ass,  Exam:sub?.HADITH.Exam}],
+    ARABIC:[{CA1:sub?.ARABIC.CA1, CA2:sub?.ARABIC.CA2, Ass:sub?.ARABIC.Ass,  Exam:sub?.ARABIC.Exam}],
+    AZKHAR:[{CA1:sub?.AZKHAR.CA1, CA2:sub?.AZKHAR.CA2, Ass:sub?.AZKHAR.Ass,  Exam:sub?.AZKHAR.Exam}],
+    SIRAH:[{CA1:sub?.SIRAH.CA1, CA2:sub?.SIRAH.CA2, Ass:sub?.SIRAH.Ass,  Exam:sub?.SIRAH.Exam}],
+    HURUF:[{CA1:sub?.HURUF.CA1, CA2:sub?.HURUF.CA2, Ass:sub?.HURUF.Ass,  Exam:sub?.HURUF.Exam}],
 
     
 
