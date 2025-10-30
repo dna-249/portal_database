@@ -65,7 +65,7 @@ const postStudent = async(req,res) => {
    // classTeacherRemark:{type:String},
         
                  })
-                 res.send("successfully uploaded")
+                 res.json("successfully uploaded")
         } catch (error) {
         console.log(error)
         res.send(error)
