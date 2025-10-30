@@ -40,15 +40,15 @@ const postStudent = async(req,res) => {
     age: age,
     sex: sex,
     
-    QURAN:{ CA1:sub?.QURAN[0].CA1, CA2:sub?.QURAN[0].CA2, Ass:sub?.QURAN[0].Ass, Exam:sub?.QURAN[0].Exam},
-    TAJWEED:{CA1:sub?.TAJWEED[0].CA1, CA2:sub?.TAJWEED[0].CA2, Ass:sub?.TAJWEED[0].Ass,  Exam:sub?.TAJWEED[0].Exam},
-    TAUHEED:{CA1:sub?.TAUHEED[0].CA1, CA2:sub?.TAUHEED[0].CA2, Ass:sub?.TAUHEED[0].Ass,  Exam:sub?.TAUHEED[0].Exam},
-    FIQH:{CA1:sub?.FIQH[0].CA1,  CA2:sub?.FIQH[0].CA2, Ass:sub?.FIQH[0].Ass, Exam:sub?.FIQH[0].Exam},
-    HADITH:{CA1:sub?.HADITH[0].CA1, CA2:sub?.HADITH[0].CA2, Ass:sub?.HADITH[0].Ass,  Exam:sub?.HADITH[0].Exam},
-    ARABIC:{CA1:sub?.ARABIC[0].CA1, CA2:sub?.ARABIC[0].CA2, Ass:sub?.ARABIC[0].Ass,  Exam:sub?.ARABIC[0].Exam},
-    AZKHAR:{CA1:sub?.AZKHAR[0].CA1, CA2:sub?.AZKHAR[0].CA2, Ass:sub?.AZKHAR[0].Ass,  Exam:sub?.AZKHAR[0].Exam},
-    SIRAH:{CA1:sub?.SIRAH[0].CA1, CA2:sub?.SIRAH[0].CA2, Ass:sub?.SIRAH[0].Ass,  Exam:sub?.SIRAH[0].Exam},
-    HURUF:{CA1:sub?.HURUF[0].CA1, CA2:sub?.HURUF[0].CA2, Ass:sub?.HURUF[0].Ass,  Exam:sub?.HURUF[0].Exam},
+    QURAN:[{ CA1:sub?.QURAN[0].CA1, CA2:sub?.QURAN[0].CA2, Ass:sub?.QURAN[0].Ass, Exam:sub?.QURAN[0].Exam}],
+    TAJWEED:[{CA1:sub?.TAJWEED[0].CA1, CA2:sub?.TAJWEED[0].CA2, Ass:sub?.TAJWEED[0].Ass,  Exam:sub?.TAJWEED[0].Exam}],
+    TAUHEED:[{CA1:sub?.TAUHEED[0].CA1, CA2:sub?.TAUHEED[0].CA2, Ass:sub?.TAUHEED[0].Ass,  Exam:sub?.TAUHEED[0].Exam}],
+    FIQH:[{CA1:sub?.FIQH[0].CA1,  CA2:sub?.FIQH[0].CA2, Ass:sub?.FIQH[0].Ass, Exam:sub?.FIQH[0].Exam}],
+    HADITH:[{CA1:sub?.HADITH[0].CA1, CA2:sub?.HADITH[0].CA2, Ass:sub?.HADITH[0].Ass,  Exam:sub?.HADITH[0].Exam}],
+    ARABIC:[{CA1:sub?.ARABIC[0].CA1, CA2:sub?.ARABIC[0].CA2, Ass:sub?.ARABIC[0].Ass,  Exam:sub?.ARABIC[0].Exam}],
+    AZKHAR:[{CA1:sub?.AZKHAR[0].CA1, CA2:sub?.AZKHAR[0].CA2, Ass:sub?.AZKHAR[0].Ass,  Exam:sub?.AZKHAR[0].Exam}],
+    SIRAH:[{CA1:sub?.SIRAH[0].CA1, CA2:sub?.SIRAH[0].CA2, Ass:sub?.SIRAH[0].Ass,  Exam:sub?.SIRAH[0].Exam}],
+    HURUF:[{CA1:sub?.HURUF[0].CA1, CA2:sub?.HURUF[0].CA2, Ass:sub?.HURUF[0].Ass,  Exam:sub?.HURUF[0].Exam}],
 
     
 
