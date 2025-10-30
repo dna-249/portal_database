@@ -9,8 +9,9 @@ const postStudent = async(req,res) => {
     const {   moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
    classTeacherRemark,  school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
 
+    
 
-     const newStudent = await Portal.create({
+    await Portal.create({
     school: school,
     studentName:studentName,
     class:classes,
@@ -19,17 +20,20 @@ const postStudent = async(req,res) => {
     admissionNo:admissionNo,
     age: age,
     sex: sex,
-    QURAN:[{ CA1:"1", CA2:"2", Ass:"s", Exam:"am"}],
-    TAJWEED:[{CA1:"CA1", CA2:"CA2", Ass:"Ass",  Exam:"Exam"}],
-    TAUHEED:[{CA1:"CA1", CA2:"CA2", Ass:"Ass",  Exam:"Exam"}],
-    FIQH:[{CA1:"",  CA2:"", Ass:"", Exam:"m"}],
-    HADITH:[{CA1:"A1", CA2:"A2", Ass:"ss",  Exam:"xam"}],
-    ARABIC:[{CA1:"A1", CA2:"A2", Ass:"ss",  Exam:"xam"}],
-    AZKHAR:[{CA1:"A1", CA2:"A2", Ass:"ss",  Exam:"xam"}],
-    SIRAH:[{CA1:"1", CA2:"2", Ass:"s",  Exam:"am"}],
-    HURUF:[{CA1:"1", CA2:"2", Ass:"s",  Exam:"am"}],
+    
+    QURAN:[{ CA1:subjects?.QURAN.CA1, CA2:subjects?.QURAN.CA2, Ass:subjects?.QURAN.Ass, Exam:subjects?.QURAN.Exam}],
+    TAJWEED:[{CA1:subjects?.TAJWEED.CA1, CA2:subjects?.TAJWEED.CA2, Ass:subjects?.TAJWEED.Ass,  Exam:subjects?.TAJWEED.Exam}],
+    TAUHEED:[{CA1:subjects?.TAUHEED.CA1, CA2:subjects?.TAUHEED.CA2, Ass:subjects?.TAUHEED.Ass,  Exam:subjects?.TAUHEED.Exam}],
+    FIQH:[{CA1:subjects?.FIQH.CA1,  CA2:subjects?.FIQH.CA2, Ass:subjects?.FIQH.Ass, Exam:subjects?.FIQH.Exam}],
+    HADITH:[{CA1:subjects?.HADITH.CA1, CA2:subjects?.HADITH.CA2, Ass:subjects?.HADITH.Ass,  Exam:subjects?.HADITH.Exam}],
+    ARABIC:[{CA1:subjects?.ARABIC.CA1, CA2:subjects?.ARABIC.CA2, Ass:subjects?.ARABIC.Ass,  Exam:subjects?.ARABIC.Exam}],
+    AZKHAR:[{CA1:subjects?.AZKHAR.CA1, CA2:subjects?.AZKHAR.CA2, Ass:subjects?.AZKHAR.Ass,  Exam:subjects?.AZKHAR.Exam}],
+    SIRAH:[{CA1:subjects?.SIRAH.CA1, CA2:subjects?.SIRAH.CA2, Ass:subjects?.SIRAH.Ass,  Exam:subjects?.SIRAH.Exam}],
+    HURUF:[{CA1:subjects?.HURUF.CA1, CA2:subjects?.HURUF.CA2, Ass:subjects?.HURUF.Ass,  Exam:subjects?.HURUF.Exam}],
 
     
+
+  
    moralEthics:  moralEthics,
    punctuality:punctuality,
    handWriting: handWriting,
@@ -43,7 +47,6 @@ const postStudent = async(req,res) => {
    classTeacherRemark: classTeacherRemark,
         
                  })
-     putPushStudent(subjects,studentName,newStudent)
                  res.json("successfully uploaded")
         } catch (error) {
         console.log(error)
@@ -101,48 +104,34 @@ const putPullStudent = async (req,res) => {
                     
 }
 
-const putPushStudent = async (subjects,name,id) => {
-    const sub = subjects?.reduce((accumulator, subject) => {
-    // A. Clean Key Generation
-    const subjectKey = subject.name.toUpperCase().replace("'", ""); // QUR'AN -> QURAN
-
-    // B. Isolate Scores
-    // Destructure the subject object: 'name' is discarded, everything else goes into 'scores'.
-    const { name, ...scores } = subject; // scores = { CA1: 5, CA2: 6, Ass: 4, Exam: 55 }
-
-    // C. Mapping to the Accumulator
-    // The key is the subject name, and the value is the scores object wrapped in an array [].
-    accumulator[subjectKey] = [scores];
-
-    return accumulator;
-}, {}); // Start with an empty object {}
-
-/*
-'transformedScores' now holds:
-{ "QURAN": [ { CA1: 5, CA2: 6, ... } ], "TAJWEED": [ { CA1: 7, CA2: 5, ... } ] }
-*/ 
-
+const putPushStudent = async (req,res) => {
 try {
-    
-        await Portal.findByIdAndUpdate({_id:id?._id},{
+    const {_id} = req.params
+    const {object} = req.params
+    const {date, subject, message,myId}= req.body;
+    if(typeof date !== "undefined"){
+    const student = await Student.findByIdAndUpdate({_id:_id},{
         $push:{
-        QURAN:[{ CA1:sub?.QURAN[0].CA1, CA2:sub?.QURAN[0].CA2, Ass:sub?.QURAN[0].Ass, Exam:sub?.QURAN[0].Exam}],
-        TAJWEED:[{CA1:sub?.TAJWEED[0].CA1, CA2:sub?.TAJWEED[0].CA2, Ass:sub?.TAJWEED[0].Ass,  Exam:sub?.TAJWEED[0].Exam}],
-        TAUHEED:[{CA1:sub?.TAUHEED[0].CA1, CA2:sub?.TAUHEED[0].CA2, Ass:sub?.TAUHEED[0].Ass,  Exam:sub?.TAUHEED[0].Exam}],
-        FIQH:[{CA1:sub?.FIQH[0].CA1,  CA2:sub?.FIQH[0].CA2, Ass:sub?.FIQH[0].Ass, Exam:sub?.FIQH[0].Exam}],
-        HADITH:[{CA1:sub?.HADITH[0].CA1, CA2:sub?.HADITH[0].CA2, Ass:sub?.HADITH[0].Ass,  Exam:sub?.HADITH[0].Exam}],
-        ARABIC:[{CA1:sub?.ARABIC[0].CA1, CA2:sub?.ARABIC[0].CA2, Ass:sub?.ARABIC[0].Ass,  Exam:sub?.ARABIC[0].Exam}],
-        AZKHAR:[{CA1:sub?.AZKHAR[0].CA1, CA2:sub?.AZKHAR[0].CA2, Ass:sub?.AZKHAR[0].Ass,  Exam:sub?.AZKHAR[0].Exam}],
-        SIRAH:[{CA1:sub?.SIRAH[0].CA1, CA2:sub?.SIRAH[0].CA2, Ass:sub?.SIRAH[0].Ass,  Exam:sub?.SIRAH[0].Exam}],
-        HURUF:[{CA1:sub?.HURUF[0].CA1, CA2:sub?.HURUF[0].CA2, Ass:sub?.HURUF[0].Ass,  Exam:sub?.HURUF[0].Exam}],
-
+          [`${object}`]:[
+                {
+                    date:date,
+                    subject:subject,
+                    message:message,
+                    myId:myId
+                }]
         }
     })
-     console.log("is working")
+      res.status(200).json(student)}
+     
+      else{
+        const student = await Student.findByIdAndUpdate({_id:_id}, req.body)
+        res.status(200).json(student)
+      }
     } catch (error) {
         console.log(error) 
      }  
-    }
+}
+
 const putSetStudent = async (req,res) => {
     const {_id} = req.params;
     const {object} = req.params;
