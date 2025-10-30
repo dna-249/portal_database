@@ -98,16 +98,6 @@ try {
         await Portal.findByIdAndUpdate({_id:id?._id},{
         $push:{
         QURAN:[{ CA1:subjects?.QURAN.CA1, CA2:subjects?.QURAN.CA2, Ass:subjects?.QURAN.Ass, Exam:subjects?.QURAN.Exam}],
-        TAJWEED:[{CA1:subjects?.TAJWEED.CA1, CA2:subjects?.TAJWEED.CA2, Ass:subjects?.TAJWEED.Ass,  Exam:subjects?.TAJWEED.Exam}],
-        TAUHEED:[{CA1:subjects?.TAUHEED.CA1, CA2:subjects?.TAUHEED.CA2, Ass:subjects?.TAUHEED.Ass,  Exam:subjects?.TAUHEED.Exam}],
-        FIQH:[{CA1:subjects?.FIQH.CA1,  CA2:subjects?.FIQH.CA2, Ass:subjects?.FIQH.Ass, Exam:subjects?.FIQH.Exam}],
-        HADITH:[{CA1:subjects?.HADITH.CA1, CA2:subjects?.HADITH.CA2, Ass:subjects?.HADITH.Ass,  Exam:subjects?.HADITH.Exam}],
-        ARABIC:[{CA1:subjects?.ARABIC.CA1, CA2:subjects?.ARABIC.CA2, Ass:subjects?.ARABIC.Ass,  Exam:subjects?.ARABIC.Exam}],
-        AZKHAR:[{CA1:subjects?.AZKHAR.CA1, CA2:subjects?.AZKHAR.CA2, Ass:subjects?.AZKHAR.Ass,  Exam:subjects?.AZKHAR.Exam}],
-        SIRAH:[{CA1:subjects?.SIRAH.CA1, CA2:subjects?.SIRAH.CA2, Ass:subjects?.SIRAH.Ass,  Exam:subjects?.SIRAH.Exam}],
-        HURUF:[{CA1:subjects?.HURUF.CA1, CA2:subjects?.HURUF.CA2, Ass:subjects?.HURUF.Ass,  Exam:subjects?.HURUF.Exam}],
-
-    
         }
     })
      console.log("is working")
