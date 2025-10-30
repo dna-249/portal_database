@@ -9,6 +9,25 @@ const postStudent = async(req,res) => {
     const {   moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
    classTeacherRemark,  school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
 
+const sub = subjects?.reduce((accumulator, subject) => {
+    // A. Clean Key Generation
+    const subjectKey = subject.name.toUpperCase().replace("'", ""); // QUR'AN -> QURAN
+
+    // B. Isolate Scores
+    // Destructure the subject object: 'name' is discarded, everything else goes into 'scores'.
+    const { name, ...scores } = subject; // scores = { CA1: 5, CA2: 6, Ass: 4, Exam: 55 }
+
+    // C. Mapping to the Accumulator
+    // The key is the subject name, and the value is the scores object wrapped in an array [].
+    accumulator[subjectKey] = [scores];
+
+    return accumulator;
+}, {}); // Start with an empty object {}
+
+/*
+'transformedScores' now holds:
+{ "QURAN": [ { CA1: 5, CA2: 6, ... } ], "TAJWEED": [ { CA1: 7, CA2: 5, ... } ] }
+*/ 
 
 
      const newStudent = await Portal.create({
@@ -20,6 +39,16 @@ const postStudent = async(req,res) => {
     admissionNo:admissionNo,
     age: age,
     sex: sex,
+    QURAN:[{ CA1:sub?.QURAN[0].CA1, CA2:sub?.QURAN[0].CA2, Ass:sub?.QURAN[0].Ass, Exam:sub?.QURAN[0].Exam}],
+        TAJWEED:[{CA1:sub?.TAJWEED[0].CA1, CA2:sub?.TAJWEED[0].CA2, Ass:sub?.TAJWEED[0].Ass,  Exam:sub?.TAJWEED[0].Exam}],
+        TAUHEED:[{CA1:sub?.TAUHEED[0].CA1, CA2:sub?.TAUHEED[0].CA2, Ass:sub?.TAUHEED[0].Ass,  Exam:sub?.TAUHEED[0].Exam}],
+        FIQH:[{CA1:sub?.FIQH[0].CA1,  CA2:sub?.FIQH[0].CA2, Ass:sub?.FIQH[0].Ass, Exam:sub?.FIQH[0].Exam}],
+        HADITH:[{CA1:sub?.HADITH[0].CA1, CA2:sub?.HADITH[0].CA2, Ass:sub?.HADITH[0].Ass,  Exam:sub?.HADITH[0].Exam}],
+        ARABIC:[{CA1:sub?.ARABIC[0].CA1, CA2:sub?.ARABIC[0].CA2, Ass:sub?.ARABIC[0].Ass,  Exam:sub?.ARABIC[0].Exam}],
+        AZKHAR:[{CA1:sub?.AZKHAR[0].CA1, CA2:sub?.AZKHAR[0].CA2, Ass:sub?.AZKHAR[0].Ass,  Exam:sub?.AZKHAR[0].Exam}],
+        SIRAH:[{CA1:sub?.SIRAH[0].CA1, CA2:sub?.SIRAH[0].CA2, Ass:sub?.SIRAH[0].Ass,  Exam:sub?.SIRAH[0].Exam}],
+        HURUF:[{CA1:sub?.HURUF[0].CA1, CA2:sub?.HURUF[0].CA2, Ass:sub?.HURUF[0].Ass,  Exam:sub?.HURUF[0].Exam}],
+
     
    moralEthics:  moralEthics,
    punctuality:punctuality,
