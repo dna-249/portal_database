@@ -6,7 +6,7 @@ const postStudent = async(req,res) => {
 
     try {
    
-//     const {school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
+    const {school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
 
 //     const sub = subjects?.reduce((accumulator, subject) => {
 //     // A. Clean Key Generation
