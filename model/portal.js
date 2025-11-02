@@ -10,6 +10,7 @@ const mongoose = require("mongoose")
     admissionNo: {type:String},
     age:{type:String},
     sex: {type:String},
+    password: {type:String},
     
     QURAN:[{ CA1:{type:String}, CA2:{type:String}, Ass:{type:String}, Exam: {type:String }}],
     TAJWEED:[{ CA1:{type:String},CA2:{type:String},Ass:{type:String}, Exam: {type:String }}],
