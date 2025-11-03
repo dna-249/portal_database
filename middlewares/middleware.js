@@ -23,8 +23,7 @@ exports.studentLogin = async (req, res) => {
         
         const token = jwt.sign(
             { id: student._id, studentName: student.studentName },
-            process.env.secret,
-            { expiresIn: '1h' }
+            process.env.secret
         );
         
         return res.status(200).json({
