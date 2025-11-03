@@ -35,7 +35,6 @@ const postStudent = async(req,res) => {
    classTeacherRemark: classTeacherRemark,
         
                  })
-     putPushStudent(subjects,newStudent)
                  res.json("successfully uploaded")
         } catch (error) {
         console.log(error)
