@@ -6,7 +6,7 @@ const postStudent = async(req,res) => {
 
     try {
    
-    const { password,  moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
+    const { password,studentPhoto,  moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
    classTeacherRemark,  school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
 
 
@@ -20,6 +20,7 @@ const postStudent = async(req,res) => {
     age: age,
     sex: sex,
     password: password,
+    studentPhoto:studentPhoto,
 
     
    moralEthics:  moralEthics,
