@@ -67,7 +67,8 @@ const getOneStudent =  async(req,res)=>{
 const putOneStudent =  async(req,res)=>{
     try {
        
-        const {_id} = req.params
+        const {_id,name} = req.params
+        if(_id){
         const student = await Portal.findByIdAndUpdate({_id:_id}, req.body)
         
         if(!student){
@@ -75,6 +76,18 @@ const putOneStudent =  async(req,res)=>{
         }
 
         res.status(200).json(student)
+    }
+
+    if(name){
+
+      const student = await Portal.findOne({studentName:name}, req.body)
+        
+        if(!student){
+            res.status(404).json("student not found")
+        }
+
+        res.status(200).json(student)   
+    }
     } catch (error) {
        res.status(500).json({message:error.message}) 
     }
