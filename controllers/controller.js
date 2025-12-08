@@ -80,7 +80,8 @@ const putOneStudent =  async(req,res)=>{
 
     if(name){
 
-      const student = await Portal.findOne({studentName:name}, req.body)
+      const id = await Portal.findOne({studentName:name})
+      const student = await Portal.findByIdAndUpdate({_id:id}, req.body)
         
         if(!student){
             res.status(404).json("student not found")
