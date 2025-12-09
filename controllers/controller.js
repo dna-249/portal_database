@@ -123,13 +123,13 @@ try {
 const putSetStudent = async (req,res) => {
     const {_id} = req.params;
     const {object} = req.params;
-    const {key} = req.params;
+   
     // const {index} = req.params;
-    const {value} = req.body;
+    const {CA1,CA2,Ass,Exam} =req.body
     const student =  await Portal.findOneAndUpdate({_id:_id},
         {$set:
           {
-           [`${object}.0.${key}`]:value
+           [`${object}.0`]:[{ CA1:CA1, CA2:CA2, Ass:Ass, Exam:Exam}]
         }
       })
       res.status(200).json(student)  

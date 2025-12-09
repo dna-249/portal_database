@@ -18,7 +18,7 @@ studentRouter.put('/push/:id/:object', putPushStudent)
 studentRouter.put('/:_id', putOneStudent)
 studentRouter.put('/reset/:name', putOneStudent)
 studentRouter.put('/pull/:_id/:_id2/:object', putPullStudent)
-studentRouter.put('/set/:_id/:object/:key', putSetStudent)
+studentRouter.put('/set/:_id/:object', putSetStudent)
 studentRouter.delete("/:_id", deleteOneStudent)
 
 
