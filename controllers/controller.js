@@ -124,12 +124,12 @@ const putSetStudent = async (req,res) => {
     const {_id} = req.params;
     const {object} = req.params;
     const {key} = req.params;
-    const {index} = req.params;
+    // const {index} = req.params;
     const {value} = req.body;
     const student =  await Portal.findOneAndUpdate({_id:_id},
         {$set:
           {
-           [`${object}.${index}.${key}`]:value
+           [`${object}.0.${key}`]:value
         }
       })
       res.status(200).json(student)  
