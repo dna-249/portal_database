@@ -24,7 +24,7 @@ exports.studentVerify = async (req, res) => {
             success: true,
             message: "Student verified successfully.",
             _id: student._id,
-            student
+            payment:student.payment
         });
 
     } catch (error) {
