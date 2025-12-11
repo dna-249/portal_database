@@ -12,6 +12,7 @@ const mongoose = require("mongoose")
     sex: {type:String},
     studentPhoto: {type:String},
     password: {type:String},
+    payment:{type:String},
     
     QURAN:[{ CA1:{type:String}, CA2:{type:String}, Ass:{type:String}, Exam: {type:String }}],
     TAJWEED:[{ CA1:{type:String},CA2:{type:String},Ass:{type:String}, Exam: {type:String }}],

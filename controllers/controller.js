@@ -7,7 +7,7 @@ const postStudent = async(req,res) => {
     try {
    
     const { password,studentPhoto,  moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
-   classTeacherRemark,  school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
+   classTeacherRemark,payment, school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
 
 
      const newStudent = await Portal.create({
@@ -20,6 +20,7 @@ const postStudent = async(req,res) => {
     age: age,
     sex: sex,
     password: password,
+    payment: payment,
     studentPhoto:studentPhoto,
 
     
