@@ -4,7 +4,6 @@ const { Portal } = require("../model/portal");
 exports.studentLogin = async (req, res) => {
     try {
         const { studentName, password } = req.body;
-
         if (!studentName || !password) {
             return res.status(400).json({ 
                 success: false, 

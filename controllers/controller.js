@@ -6,8 +6,11 @@ const postStudent = async(req,res) => {
 
     try {
    
-    const { password,studentPhoto,  moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
-   classTeacherRemark,payment, school,studentName, classes, term, session, admissionNo, sex, subjects, age } = req.body
+    const { 
+        password,studentPhoto,  moralEthics, punctuality, handWriting, honesty, fluency,  selfControl, responsibility, initiative,  politeness,  headRemark,
+        classTeacherRemark,payment, school,studentName, classes, term, session, admissionNo, sex, subjects, age,
+        
+} = req.body
 
 
      const newStudent = await Portal.create({
@@ -110,12 +113,50 @@ const putPullStudent = async (req,res) => {
 
 const putPushStudent = async (req,res) => {
     const {object,id} = req.params;
-    const {CA1,CA2,Ass,Exam} =req.body
-try {
-    
-        await Portal.findByIdAndUpdate({_id:id},{
-        $push:{ [`${object}`]:[{ CA1:CA1, CA2:CA2, Ass:Ass, Exam:Exam}], }})
+    const {CA1,CA2,Ass,Exam,
+         date,     tajweed,     hifz,     tajError,     hifzError,     toV,     fromV,     chapter,   
+        prevStarting,  preStopping,   preScore, newStarting, newStopping,   newScore,   hodComment ,  parentName, parentComment,   parentDate,
+        teacherComment, teacherName,    teacherSign,
+    } =req.body
 
+try {
+    if(CA1 ||CA2 ||Ass ||Exam){
+         await Portal.findByIdAndUpdate({_id:id},{
+        $push:{ [`${object}`]:[{ CA1:CA1, CA2:CA2, Ass:Ass, Exam:Exam}],
+               }})
+
+    }else if( parentDate ||parentComment|| parentName){
+            await Portal.findByIdAndUpdate({_id:id},{
+            $push:{ 
+                ['parentName']:[{ parentName: parentName}],
+                ['parentComment']:[{parentComment:parentComment}],
+                [' parentDate']:[{ parentDate:  parentDate}]
+            }})
+
+    }else if(newStarting ||newStopping|| newScore||hodComment){
+            await Portal.findByIdAndUpdate({_id:id},{
+                $push:{ ['newStarting']:  [{newStarting: newStarting}],
+                        ['newStopping']:  [{newStopping: newStopping}],
+                        ['newScore']:  [{ newScore: newScore}],
+                        ['hodComment']: [{ hodComment:  hodComment}],
+                        ['prevStarting']: [{ prevStarting: prevStarting}],
+                        ['preStopping']:[{preStopping: preStopping}], 
+                        ['preScore']:[{ preScore: preScore}],
+
+                 }})
+    }else{
+            await Portal.findByIdAndUpdate({_id:id},{
+             $push:{ 
+                [`${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+                ['week']:[{ week: week}],
+                ['term']:[{ term: term}], 
+                ['teacherComment']:[{ teacherComment: teacherComment}],
+                ['teacherName']:[{teacherName: teacherName}], 
+                ['teacherSign']:[{ teacherSign:teacherSign}] ,
+               }})
+
+    }
+      
     res.json("successful")
     } catch (error) {
         console.log(error) 

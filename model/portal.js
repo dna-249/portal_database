@@ -36,6 +36,34 @@ const mongoose = require("mongoose")
     politeness: {type:String},
     headRemark: {type:String},
     classTeacherRemark:{type:String},
+
+    week:[{ week: {type:String}}],
+    term:[{ term: {type:String}}], 
+    teacherComment:[{ teacherComment: {type:String}}],
+    teacherName:[{teacherName: {type:String}}], 
+    teacherSign:[{ teacherSign: {type:String}}] ,
+
+    mon:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }],
+    tue:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String},  }],
+    wed:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String},  }],
+    thur:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }], 
+    fri:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }], 
+    sat:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }], 
+    sun:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }], 
+
+    prevStarting: [{ prevStarting: {type:String}}],
+    preStopping:[{preStopping: {type:String}}], 
+    preScore:[{ preScore: {type:String}}],
+    newStarting:  [{newStarting: {type:String}}],
+    newStopping:  [{newStopping: {type:String}}],
+    newScore:  [{ newScore: {type:String}}],
+    hodComment: [{ hodComment: {type:String}}],
+
+    parentName:[{ parentName: {type:String}}],
+    parentComment:[{parentComment: {type:String}}],
+    parentDate:[{ parentDate: {type:String}}]
+
+
 });
 
 const Portal = mongoose.model("portal",studentData)
