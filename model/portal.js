@@ -37,8 +37,8 @@ const mongoose = require("mongoose")
     headRemark: {type:String},
     classTeacherRemark:{type:String},
 
-    week:[{ week: {type:String}}],
-    term:[{ term: {type:String}}], 
+    weeks:[{ weeks: {type:String}}],
+    terms:[{ terms: {type:String}}], 
     teacherComment:[{ teacherComment: {type:String}}],
     teacherName:[{teacherName: {type:String}}], 
     teacherSign:[{ teacherSign: {type:String}}] ,

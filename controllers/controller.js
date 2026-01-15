@@ -114,7 +114,7 @@ const putPullStudent = async (req,res) => {
 const putPushStudent = async (req,res) => {
     const {object,id} = req.params;
     const {CA1,CA2,Ass,Exam,
-         date,     tajweed,     hifz,     tajError,     hifzError,     toV,     fromV,     chapter,   
+         date,     tajweed,  weeks,terms,   hifz,     tajError,     hifzError,     toV,     fromV,     chapter,   
         prevStarting,  preStopping,   preScore, newStarting, newStopping,   newScore,   hodComment ,  parentName, parentComment,   parentDate,
         teacherComment, teacherName,    teacherSign,
     } =req.body
@@ -130,7 +130,7 @@ try {
             $push:{ 
                 ['parentName']:[{ parentName: parentName}],
                 ['parentComment']:[{parentComment:parentComment}],
-                [' parentDate']:[{ parentDate:  parentDate}]
+                ['parentDate']:[{ parentDate:  parentDate}]
             }})
 
     }else if(newStarting ||newStopping|| newScore||hodComment){
@@ -148,8 +148,8 @@ try {
             await Portal.findByIdAndUpdate({_id:id},{
              $push:{ 
                 [`${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
-                ['week']:[{ week: week}],
-                ['term']:[{ term: term}], 
+                ['weeks']:[{ weeks: weeks}],
+                ['terms']:[{ terms: terms}], 
                 ['teacherComment']:[{ teacherComment: teacherComment}],
                 ['teacherName']:[{teacherName: teacherName}], 
                 ['teacherSign']:[{ teacherSign:teacherSign}] ,
