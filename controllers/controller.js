@@ -128,32 +128,41 @@ try {
     }else if( parentDate ||parentComment|| parentName){
             await Portal.findByIdAndUpdate({_id:id},{
             $push:{ 
-                ['parent.0.parentName']:[{ parentName: parentName}],
-                ['parent.0.parentComment']:[{parentComment:parentComment}],
-                ['parent.0.parentDate']:[{ parentDate:  parentDate}]
+                ['parent.parentName']:[{ parentName: parentName}],
+                ['parent.parentComment']:[{parentComment:parentComment}],
+                ['parent.parentDate']:[{ parentDate:  parentDate}]
             }})
 
     }else if(newStarting ||newStopping|| newScore||hodComment){
             await Portal.findByIdAndUpdate({_id:id},{
-                $push:{ ['management.0.newStarting']:  [{newStarting: newStarting}],
-                        ['management.0.newStopping']:  [{newStopping: newStopping}],
-                        ['management.0.newScore']:  [{ newScore: newScore}],
-                        ['management.0.hodComment']: [{ hodComment:  hodComment}],
-                        ['management.0.prevStarting']: [{ prevStarting: prevStarting}],
-                        ['management.0.preStopping']:[{preStopping: preStopping}], 
-                        ['management.0.preScore']:[{ preScore: preScore}],
+                $push:{ ['management.newStarting']:  [{newStarting: newStarting}],
+                        ['management.newStopping']:  [{newStopping: newStopping}],
+                        ['management.newScore']:  [{ newScore: newScore}],
+                        ['management.hodComment']: [{ hodComment:  hodComment}],
+                        ['management.prevStarting']: [{ prevStarting: prevStarting}],
+                        ['management.preStopping']:[{preStopping: preStopping}], 
+                        ['management.preScore']:[{ preScore: preScore}],
 
                  }})
     }else{
+           if(weeks || terms || teacherComment || teacherName || teacherSign){
             await Portal.findByIdAndUpdate({_id:id},{
              $push:{ 
-                [`teacher.0.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
-                ['teacher.0.weeks']:[{ weeks: weeks}],
-                ['teacher.0.terms']:[{ terms: terms}], 
-                ['teacher.0.teacherComment']:[{ teacherComment: teacherComment}],
-                ['teacher.0.teacherName']:[{teacherName: teacherName}], 
-                ['teacher.0.teacherSign']:[{ teacherSign:teacherSign}] ,
+                [`teacher.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+                ['teacher.weeks']:[{ weeks: weeks}],
+                ['teacher.terms']:[{ terms: terms}], 
+                ['teacher.teacherComment']:[{ teacherComment: teacherComment}],
+                [' teacher.teacherName']:[{teacherName: teacherName}], 
+                ['teacher.teacherSign']:[{ teacherSign:teacherSign}] ,
                }})
+           } else {
+
+            await Portal.findByIdAndUpdate({_id:id},{
+             $push:{ 
+                [`teacher.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+               }})
+           }
+           
 
     }
       
