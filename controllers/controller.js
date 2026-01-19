@@ -145,7 +145,7 @@ try {
 
                  }})
     
-        } else if(weeks || terms || teacherComment || teacherName || teacherSign){
+        } else if(weeks !== "" && terms !== "" && teacherComment !== "" && teacherName !== "" && teacherSign !== ""){
             await Portal.findByIdAndUpdate({_id:id},{
              $push:{ 
                 [`teacher.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
