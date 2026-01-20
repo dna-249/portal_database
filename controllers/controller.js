@@ -145,21 +145,21 @@ try {
 
                  }})
     
-        } else if(weeks !== "" && terms !== "" && teacherComment !== "" && teacherName !== "" && teacherSign !== ""){
+        } else if(weeks || terms || teacherComment || teacherName || teacherSign){
             await Portal.findByIdAndUpdate({_id:id},{
              $push:{ 
-                [`teacher.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
-                ['teacher.weeks']:[{ weeks: weeks}],
-                ['teacher.terms']:[{ terms: terms}], 
-                ['teacher.teacherComment']:[{ teacherComment: teacherComment}],
-                [' teacher.teacherName']:[{teacherName: teacherName}], 
-                ['teacher.teacherSign']:[{ teacherSign:teacherSign}] ,
+                [`teacher.0.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+                ['teacher.0.weeks']:[{ weeks: weeks}],
+                ['teacher.0.terms']:[{ terms: terms}], 
+                ['teacher.0.teacherComment']:[{ teacherComment: teacherComment}],
+                ['teacher.0.teacherName']:[{teacherName: teacherName}], 
+                ['teacher.0.teacherSign']:[{ teacherSign:teacherSign}] ,
                }})
            } else {
 
             await Portal.findByIdAndUpdate({_id:id},{
              $push:{ 
-                [`teacher.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+                [`teacher.0.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
                }})
            }
            
