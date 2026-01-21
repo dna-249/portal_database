@@ -171,6 +171,46 @@ try {
         console.log(error) 
      }  
     }
+
+    const putSetProgress  = async (req,res) => {
+    const {object,idx,_id} = req.params;
+   
+    // const {index} = req.params;
+ const {
+         date,     tajweed,  weeks,terms,   hifz,     tajError,     hifzError,     toV,     fromV,     chapter,   
+        prevStarting,  preStopping,   preScore, newStarting, newStopping,   newScore,   hodComment ,  parentName, parentComment,   parentDate,
+        teacherComment, teacherName,    teacherSign,
+    } =req.body
+    const student =  await Portal.findOneAndUpdate({_id:_id},
+        {$set:
+          {     [`teacher.0.${object}.${idx}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+                [`teacher.0.weeks.${idx}`]:[{ weeks: weeks}],
+                [`teacher.0.terms.${idx}`]:[{ terms: terms}], 
+                [`teacher.0.teacherComment.${idx}`]:[{ teacherComment: teacherComment}],
+                [`teacher.0.teacherName.${idx}`]:[{teacherName: teacherName}], 
+                [`teacher.0.teacherSign.${idx}`]:[{ teacherSign:teacherSign}] ,
+                [`teacher.0.weeks.${idx}`]:[{ weeks: weeks}],
+                [`teacher.0.terms.${idx}`]:[{ terms: terms}], 
+                [`teacher.0.teacherComment.${idx}`]:[{ teacherComment: teacherComment}],
+                [`teacher.0.teacherName.${idx}`]:[{teacherName: teacherName}], 
+                [`teacher.0.teacherSign.${idx}`]:[{ teacherSign:teacherSign}] ,
+                
+                [`management.newStarting.${idx}`]:  [{newStarting: newStarting}],
+                [`management.newStopping.${idx}`]:  [{newStopping: newStopping}],
+                [`management.newScore.${idx}`]:  [{ newScore: newScore}],
+                [`management.hodComment.${idx}`]: [{ hodComment:  hodComment}],
+                [`management.prevStarting.${idx}`]: [{ prevStarting: prevStarting}],
+                [`management.preStopping.${idx}`]:[{preStopping: preStopping}], 
+                [`management.preScore.${idx}`]:[{ preScore: preScore}],
+
+                [`parent.parentName.${idx}`]:[{ parentName: parentName}],
+                [`parent.parentComment.${idx}`]:[{parentComment:parentComment}],
+                [`parent.parentDate.${idx}`]:[{ parentDate:  parentDate}]
+
+            }
+      })
+      res.status(200).json(student)  
+}
 const putSetStudent = async (req,res) => {
     const {_id} = req.params;
     const {object} = req.params;
@@ -208,5 +248,6 @@ module.exports = {
      putPushStudent,
      putSetStudent,
      putOneStudent,
-     deleteOneStudent
+     deleteOneStudent,
+     putSetProgress
 }
