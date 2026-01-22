@@ -195,17 +195,17 @@ try {
                 [`teacher.0.teacherName.${idx}`]:[{teacherName: teacherName}], 
                 [`teacher.0.teacherSign.${idx}`]:[{ teacherSign:teacherSign}] ,
                 
-                [`management.newStarting.${idx}`]:  [{newStarting: newStarting}],
-                [`management.newStopping.${idx}`]:  [{newStopping: newStopping}],
-                [`management.newScore.${idx}`]:  [{ newScore: newScore}],
-                [`management.hodComment.${idx}`]: [{ hodComment:  hodComment}],
-                [`management.prevStarting.${idx}`]: [{ prevStarting: prevStarting}],
-                [`management.preStopping.${idx}`]:[{preStopping: preStopping}], 
-                [`management.preScore.${idx}`]:[{ preScore: preScore}],
+                [`management.0.newStarting.${idx}`]:  [{newStarting: newStarting}],
+                [`management.0.newStopping.${idx}`]:  [{newStopping: newStopping}],
+                [`management.0.newScore.${idx}`]:  [{ newScore: newScore}],
+                [`management.0.hodComment.${idx}`]: [{ hodComment:  hodComment}],
+                [`management.0.prevStarting.${idx}`]: [{ prevStarting: prevStarting}],
+                [`management.0.preStopping.${idx}`]:[{preStopping: preStopping}], 
+                [`management.0.preScore.${idx}`]:[{ preScore: preScore}],
 
-                [`parent.parentName.${idx}`]:[{ parentName: parentName}],
-                [`parent.parentComment.${idx}`]:[{parentComment:parentComment}],
-                [`parent.parentDate.${idx}`]:[{ parentDate:  parentDate}]
+                [`parent.0.parentName.${idx}`]:[{ parentName: parentName}],
+                [`parent.0.parentComment.${idx}`]:[{parentComment:parentComment}],
+                [`parent.0.parentDate.${idx}`]:[{ parentDate:  parentDate}]
 
             }
       })
