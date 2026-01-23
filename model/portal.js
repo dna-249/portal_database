@@ -36,7 +36,7 @@ const mongoose = require("mongoose")
     politeness: {type:String},
     headRemark: {type:String},
     classTeacherRemark:{type:String},
-    teacher:[{
+   
     weeks:[{ weeks: {type:String}}],
     terms:[{ terms: {type:String}}], 
     teacherComment:[{ teacherComment: {type:String}}],
@@ -50,8 +50,8 @@ const mongoose = require("mongoose")
     fri:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }], 
     sat:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }], 
     sun:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }], 
-        }],
-    management:[{
+        
+   
     prevStarting: [{ prevStarting: {type:String}}],
     preStopping:[{preStopping: {type:String}}], 
     preScore:[{ preScore: {type:String}}],
@@ -59,12 +59,12 @@ const mongoose = require("mongoose")
     newStopping:  [{newStopping: {type:String}}],
     newScore:  [{ newScore: {type:String}}],
     hodComment: [{ hodComment: {type:String}}],
-}],
-    parent:[{
+
+
     parentName:[{ parentName: {type:String}}],
     parentComment:[{parentComment: {type:String}}],
     parentDate:[{ parentDate: {type:String}}]
-}],
+
 
 });
 
