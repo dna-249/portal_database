@@ -199,7 +199,7 @@ try {
                 [`newStopping.${idx}`]:  [{newStopping: newStopping}],
                 [`newScore.${idx}`]:  [{ newScore: newScore}],
                 [`hodComment.${idx}`]: [{ hodComment:  hodComment}],
-                [`prevStarting.${idx}`]:s [{ prevStarting: prevStarting}],
+                [`prevStarting.${idx}`]: [{ prevStarting: prevStarting}],
                 [`preStopping.${idx}`]:[{preStopping: preStopping}], 
                 [`preScore.${idx}`]:[{ preScore: preScore}],
 
