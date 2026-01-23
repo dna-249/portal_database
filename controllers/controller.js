@@ -128,38 +128,38 @@ try {
     }else if( parentDate ||parentComment|| parentName){
             await Portal.findByIdAndUpdate({_id:id},{
             $push:{ 
-                ['parent.parentName']:[{ parentName: parentName}],
-                ['parent.parentComment']:[{parentComment:parentComment}],
-                ['parent.parentDate']:[{ parentDate:  parentDate}]
+                ['parentName']:[{ parentName: parentName}],
+                ['parentComment']:[{parentComment:parentComment}],
+                ['parentDate']:[{ parentDate:  parentDate}]
             }})
 
     }else if(newStarting ||newStopping|| newScore||hodComment){
             await Portal.findByIdAndUpdate({_id:id},{
-                $push:{ ['management.newStarting']:  [{newStarting: newStarting}],
-                        ['management.newStopping']:  [{newStopping: newStopping}],
-                        ['management.newScore']:  [{ newScore: newScore}],
-                        ['management.hodComment']: [{ hodComment:  hodComment}],
-                        ['management.prevStarting']: [{ prevStarting: prevStarting}],
-                        ['management.preStopping']:[{preStopping: preStopping}], 
-                        ['management.preScore']:[{ preScore: preScore}],
+                $push:{ ['newStarting']:  [{newStarting: newStarting}],
+                        ['newStopping']:  [{newStopping: newStopping}],
+                        ['newScore']:  [{ newScore: newScore}],
+                        ['hodComment']: [{ hodComment:  hodComment}],
+                        ['prevStarting']: [{ prevStarting: prevStarting}],
+                        ['preStopping']:[{preStopping: preStopping}], 
+                        ['preScore']:[{ preScore: preScore}],
 
                  }})
     
         } else if(weeks || terms || teacherComment || teacherName || teacherSign){
             await Portal.findByIdAndUpdate({_id:id},{
              $push:{ 
-                [`teacher.0.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
-                ['teacher.0.weeks']:[{ weeks: weeks}],
-                ['teacher.0.terms']:[{ terms: terms}], 
-                ['teacher.0.teacherComment']:[{ teacherComment: teacherComment}],
-                ['teacher.0.teacherName']:[{teacherName: teacherName}], 
-                ['teacher.0.teacherSign']:[{ teacherSign:teacherSign}] ,
+                [`${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+                ['weeks']:[{ weeks: weeks}],
+                ['terms']:[{ terms: terms}], 
+                ['teacherComment']:[{ teacherComment: teacherComment}],
+                ['teacherName']:[{teacherName: teacherName}], 
+                ['teacherSign']:[{ teacherSign:teacherSign}] ,
                }})
            } else {
 
             await Portal.findByIdAndUpdate({_id:id},{
              $push:{ 
-                [`teacher.0.${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+                [`${object}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
                }})
            }
            
@@ -183,29 +183,29 @@ try {
     } =req.body
     const student =  await Portal.findOneAndUpdate({_id:_id},
         {$set:
-          {     [`teacher.0.${object}.${idx}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
-                [`teacher.0.weeks.${idx}`]:[{ weeks: weeks}],
-                [`teacher.0.terms.${idx}`]:[{ terms: terms}], 
-                [`teacher.0.teacherComment.${idx}`]:[{ teacherComment: teacherComment}],
-                [`teacher.0.teacherName.${idx}`]:[{teacherName: teacherName}], 
-                [`teacher.0.teacherSign.${idx}`]:[{ teacherSign:teacherSign}] ,
-                [`teacher.0.weeks.${idx}`]:[{ weeks: weeks}],
-                [`teacher.0.terms.${idx}`]:[{ terms: terms}], 
-                [`teacher.0.teacherComment.${idx}`]:[{ teacherComment: teacherComment}],
-                [`teacher.0.teacherName.${idx}`]:[{teacherName: teacherName}], 
-                [`teacher.0.teacherSign.${idx}`]:[{ teacherSign:teacherSign}] ,
+          {     [`${object}.${idx}`]: [{ date: date,tajweed: tajweed,hifz: hifz,tajError:tajError,hifzError: hifzError,toV:toV,fromV: fromV,chapter:  chapter,} ], 
+                [`weeks.${idx}`]:[{ weeks: weeks}],
+                [`terms.${idx}`]:[{ terms: terms}], 
+                [`teacherComment.${idx}`]:[{ teacherComment: teacherComment}],
+                [`teacherName.${idx}`]:[{teacherName: teacherName}], 
+                [`teacherSign.${idx}`]:[{ teacherSign:teacherSign}] ,
+                [`weeks.${idx}`]:[{ weeks: weeks}],
+                [`terms.${idx}`]:[{ terms: terms}], 
+                [`teacherComment.${idx}`]:[{ teacherComment: teacherComment}],
+                [`teacherName.${idx}`]:[{teacherName: teacherName}], 
+                [`teacherSign.${idx}`]:[{ teacherSign:teacherSign}] ,
                 
-                [`management.0.newStarting.${idx}`]:  [{newStarting: newStarting}],
-                [`management.0.newStopping.${idx}`]:  [{newStopping: newStopping}],
-                [`management.0.newScore.${idx}`]:  [{ newScore: newScore}],
-                [`management.0.hodComment.${idx}`]: [{ hodComment:  hodComment}],
-                [`management.0.prevStarting.${idx}`]: [{ prevStarting: prevStarting}],
-                [`management.0.preStopping.${idx}`]:[{preStopping: preStopping}], 
-                [`management.0.preScore.${idx}`]:[{ preScore: preScore}],
+                [`newStarting.${idx}`]:  [{newStarting: newStarting}],
+                [`newStopping.${idx}`]:  [{newStopping: newStopping}],
+                [`newScore.${idx}`]:  [{ newScore: newScore}],
+                [`hodComment.${idx}`]: [{ hodComment:  hodComment}],
+                [`prevStarting.${idx}`]:s [{ prevStarting: prevStarting}],
+                [`preStopping.${idx}`]:[{preStopping: preStopping}], 
+                [`preScore.${idx}`]:[{ preScore: preScore}],
 
-                [`parent.0.parentName.${idx}`]:[{ parentName: parentName}],
-                [`parent.0.parentComment.${idx}`]:[{parentComment:parentComment}],
-                [`parent.0.parentDate.${idx}`]:[{ parentDate:  parentDate}]
+                [`parentName.${idx}`]:[{ parentName: parentName}],
+                [`parentComment.${idx}`]:[{parentComment:parentComment}],
+                [`parentDate.${idx}`]:[{ parentDate:  parentDate}]
 
             }
       })
