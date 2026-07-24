@@ -3,16 +3,16 @@ const { Portal } = require("../model/portal");
 
 // Create a new student (Initializes an empty academic record for their session)
 
-const yearTearm = async (id)=>{
-   const { term,session} = await Portal.findById({_id:id})
-
-   const data ={
-        term :term,
-        year : session
-   }
-
-   return data
-}
+const yearTerm = async (id) => {
+    // Corrected findById syntax (pass id directly)
+    const student = await Portal.findById(id);
+    if (!student) throw new Error("Student not found");
+    
+    return {
+        term: student.term,
+        year: student.session
+    };
+};
 const postStudent = async (req, res) => {
     try {
         const { 
@@ -110,7 +110,7 @@ const putPushStudent = async (req, res) => {
         parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,
     } = req.body;
 
-        const { year, term} = yearTearm(id)
+        const { year, term} = await yearTerm(id)
 
 
     try {
@@ -219,7 +219,7 @@ const putSetStudent = async (req, res) => {
         const { _id ,object} = req.params;
         const { CA1, CA2, Ass, Exam, } = req.body; // <-- Passing target data from body
 
-        const { year, term} = yearTearm(_id)
+        const { year, term} = await yearTerm(_id)
         
         // --- UPDATED: Setting Academic Scores using Dynamic Years ---
         const student = await Portal.findOneAndUpdate(
