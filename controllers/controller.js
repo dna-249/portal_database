@@ -111,22 +111,24 @@ const putPushStudent = async (req, res) => {
     } = req.body;
 
         const { year, term} = await yearTerm(id)
-
+        
 
     try {
         // --- UPDATED: Pushing Academic Scores using Dynamic Years ---
         // Expected variables in req.body: year (e.g. "2026"), term (e.g. "firstTerm"), subject (e.g. "QURAN")
         if (CA1 || CA2 || Ass || Exam) {
-            await Portal.findOneAndUpdate(
-                { _id: id, "academicYears.year": year }, // 1. Find the student AND the specific year
+            const test = await Portal.findOneAndUpdate(
+                { _id: id }, // 1. Find the student AND the specific year
                 {
                     // 2. Use the $ operator to push into that specific year's term and subject array
-                    $push: { [`academicYears.$.${term}.${object}`]: { CA1, CA2, Ass, Exam } }
+                    $push: { [`academicYears.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
                 },
                 { new: true }
             );
+        console.log(test)
+
+
         } 
-        
         // --- Daily Logs & Parent Info (Unchanged from previous logic) ---
         else if (parentDate || parentComment || parentName) {
             await Portal.findByIdAndUpdate(id, {
@@ -223,10 +225,11 @@ const putSetStudent = async (req, res) => {
         
         // --- UPDATED: Setting Academic Scores using Dynamic Years ---
         const student = await Portal.findOneAndUpdate(
-            { _id: _id, "academicYears.year": year }, // Match the student and the specific year block
+            { _id: _id }, // Match the student and the specific year block
             { 
                 // Overwrite the first index (.0) of the specific term and subject
-                $set: { [`academicYears.$.${term}.${object}.0`]: { CA1, CA2, Ass, Exam } } 
+                $set: { [`academicYears.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
+
             },
             { new: true }
         );
