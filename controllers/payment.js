@@ -1,166 +1,267 @@
-// const https = require("https")
-// const {Products} = require("../models/user");
-// const { default: axios } = require("axios");
+const mongoose = require('mongoose');
+const { Portal } = require("../model/portal");
 
-// // Call the function
+// Create a new student (Initializes an empty academic record for their session)
 
+const yearTearm = async (id)=>{
+   const { term,session} = await Portal.findById({_id:id})
 
+   const data ={
+        term :term,
+        year : session
+   }
 
-// const qs = require('qs');
-// const { checkEligibility } = require("./api");
+   return data
+}
+const postStudent = async (req, res) => {
+    try {
+        const { 
+            password, studentPhoto, moralEthics, punctuality, handWriting, honesty, fluency, selfControl, responsibility, initiative, politeness, headRemark,
+            classTeacherRemark, payment, school, studentName, classes, term, session, admissionNo, sex, subjects, age 
+        } = req.body;
 
-// // Replace these with your actual credentials and endpoint
-// const tokenUrl = 'https://api.mtn.com/v1/oauth/access_token?grant_type=client_credentials';
-// const clientId = '3EKiybDnteaJ2skHsXVGUUNMtGLlvgk2';
-// const clientSecret ='akgfShZqdCgbMp3f';
+        // Automatically structure the first academic year based on their session/year
+        // For example, if session is "2026", it creates a 2026 object ready for scores.
+        const currentYearRecord = {
+            year: session || new Date().getFullYear().toString(), 
+            firstTerm: {},
+            secondTerm: {},
+            thirdTerm: {}
+        };
 
+        const newStudent = await Portal.create({
+            ...req.body, // Spread remaining simple fields
+            class: classes,
+            academicYears: [currentYearRecord] // Inject dynamic year
+        });
 
+        res.status(201).json({ message: "Successfully uploaded", student: newStudent });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+}
 
+const getAllStudent = async (req, res) => {
+    try {
+        const students = await Portal.find({});
+        res.status(200).json(students);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
+const getOneStudent = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const student = await Portal.findById(_id);
+        if (!student) return res.status(404).json("Student not found");
+        
+        res.status(200).json(student);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
 
+const putOneStudent = async (req, res) => {
+    try {
+        const { _id, name } = req.params;
+        let student;
 
-// const payment =(q,r)=>{
-  
-//   const {email,amount,name} = q?.body
-//   const params = JSON.stringify({
-//   "email": email,
-//   "amount": amount *100,
-//   "name":name
-   
-// })
+        if (_id) {
+            student = await Portal.findByIdAndUpdate(_id, req.body, { new: true });
+        } else if (name) {
+            student = await Portal.findOneAndUpdate({ studentName: name }, req.body, { new: true });
+        }
 
-// const options = {
-//   hostname: 'api.paystack.co',
-//   port: 443,
-//   path: '/transaction/initialize',
-//   method: 'POST',
-//   headers: {
-//     Authorization: `Bearer ${process.env.LIVE_KEY}`,
-//     'Content-Type': 'application/json'
-//   }
-// }
+        if (!student) {
+            return res.status(404).json("Student not found");
+        }
+        res.status(200).json(student);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
-// const req = https.request(options, res => {
-//   let data = ''
- 
-//   res.on('data', (chunk) => {
-//     data += chunk
-//   });
-
-//   res.on('end', () => {
-//    const response = JSON.parse(data)
-//     r.json(response)
-//   })
-// }).on('error', error => {
-//   console.error(error)
-// })
-
-// req.write(params)
-// req.end()
-// }
-
-
-
-
-
-
-
-// const total = async(email,add)=>{
-
-//      const user = await Products.findOne({email:email})
-//      const sums = user?.total
-//      const id = user?._id
-
-//      const divid =()=>{return add/100}
-//      const adds = divid()
-//     try {
-//                     const sum =()=>{
-
-//                             if(add){ return Number(sums) + Number(adds)}
-//                            else{ return sums }
-
-//                             }
-
-//                     const plus = sum()
-
-//       await Products.findByIdAndUpdate({_id:id},{total:plus})
-                          
-
-//     } catch (error) {
-//           console.log(error.message)
-//     }
-  
-
-// }
-// const total2 = async(id,minus)=>{
-
-//      const user = await Products.findById({_id:id})
-//      const sums = user?.total
-
-  
-//     try {
-//                     const sum =()=>{
-//                             if(minus){ return Number(sums) - Number(minus)
-//                             }else{ return sums }
-
-//                             }
-
-//                     const plus = sum()
-
-//       await Products.findByIdAndUpdate({_id:id},{total:plus})
-                          
-
-//     } catch (error) {
-//           res.json(error.message)
-//     }
-  
-
-// }
+// Add a brand new Academic Year for a student progressing to a new class/session
 
 
-// const transaction = async(object,_id,status,date,amount,size,network)=>{
-//    try { 
-//                  await Products.findByIdAndUpdate({_id:_id},{
-//                     $push:{
-//                       [`${object}`]:[
-//                         {
-//                            size:size,
-//                             network:network,
-//                             amount:amount,
-//                             date:date,
-//                             status:status
-//                         }]
-//                     }
-//                 })
-//                 res.sendStatus(200)
-   
-//     } catch (error) {
-//          console.log(error.message)
-//     }
-  
-// }
-// const order = async(req,res)=>{
-//   const {userId,date,amount,size,network,phone} = req.body
-//    try { 
-//                  await Products.findByIdAndUpdate({_id:userId},{
-//                     $push:{
-//                       ["order"]:[
-//                         {
-//                            size:size,
-//                             network:network,
-//                             amount:amount,
-//                             date:date,
-//                             phone:phone
-//                         }]
-//                     }
-//                 })
-//                 res.sendStatus(200)
-   
-//     } catch (error) {
-//          console.log(error.message)
-//     }
-  
-// }
+const putPullStudent = async (req, res) => {
+    try {
+        const { _id, _id2, object } = req.params;
+
+        const student = await Portal.findOneAndUpdate(
+            { _id: _id },
+            { $pull: { [object]: { _id: _id2 } } },
+            { new: true }
+        );
+        res.status(200).json(student);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const putPushStudent = async (req, res) => {
+    const { object, id } = req.params;
+    const {
+        CA1, CA2, Ass, Exam,// <-- Added year, term, subject here
+        date, tajweed, weeks, terms, hifz, tajError, hifzError, toV, fromV, chapter,
+        prevStarting, preStopping, preScore, newStarting, newStopping, newScore, hodComment,
+        parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,
+    } = req.body;
+
+        const { year, term} = yearTearm(_id)
 
 
-// module.exports = {order,transaction,total,payment,total2}
+    try {
+        // --- UPDATED: Pushing Academic Scores using Dynamic Years ---
+        // Expected variables in req.body: year (e.g. "2026"), term (e.g. "firstTerm"), subject (e.g. "QURAN")
+        if (CA1 || CA2 || Ass || Exam) {
+            await Portal.findOneAndUpdate(
+                { _id: id, "academicYears.year": year }, // 1. Find the student AND the specific year
+                {
+                    // 2. Use the $ operator to push into that specific year's term and subject array
+                    $push: { [`academicYears.$.${term}.${object}`]: { CA1, CA2, Ass, Exam } }
+                },
+                { new: true }
+            );
+        } 
+        
+        // --- Daily Logs & Parent Info (Unchanged from previous logic) ---
+        else if (parentDate || parentComment || parentName) {
+            await Portal.findByIdAndUpdate(id, {
+                $push: {
+                    parentName: { parentName },
+                    parentComment: { parentComment },
+                    parentDate: { parentDate }
+                }
+            });
+        } else if (newStarting || newStopping || newScore || hodComment) {
+            await Portal.findByIdAndUpdate(id, {
+                $push: {
+                    newStarting: { newStarting },
+                    newStopping: { newStopping },
+                    newScore: { newScore },
+                    hodComment: { hodComment },
+                    prevStarting: { prevStarting },
+                    preStopping: { preStopping },
+                    preScore: { preScore },
+                }
+            });
+        } else if (weeks || terms || teacherComment || teacherName || teacherSign) {
+            await Portal.findByIdAndUpdate(id, {
+                $push: {
+                    [object]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
+                    weeks: { weeks },
+                    terms: { terms },
+                    teacherComment: { teacherComment },
+                    teacherName: { teacherName },
+                    teacherSign: { teacherSign }
+                }
+            });
+        } else {
+            await Portal.findByIdAndUpdate(id, {
+                $push: {
+                    [object]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter }
+                }
+            });
+        }
+
+        res.status(200).json("Successful");
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const putSetProgress = async (req, res) => {
+    try {
+        const { object, idx, _id } = req.params;
+        const {
+            date, tajweed, weeks, terms, hifz, tajError, hifzError, toV, fromV, chapter,
+            prevStarting, preStopping, preScore, newStarting, newStopping, newScore, hodComment,
+            parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,
+        } = req.body;
+
+        const student = await Portal.findOneAndUpdate(
+            { _id: _id },
+            {
+                $set: {
+                    [`${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
+                    [`weeks.${idx}`]: { weeks },
+                    [`terms.${idx}`]: { terms },
+                    [`teacherComment.${idx}`]: { teacherComment },
+                    [`teacherName.${idx}`]: { teacherName },
+                    [`teacherSign.${idx}`]: { teacherSign },
+                    [`newStarting.${idx}`]: { newStarting },
+                    [`newStopping.${idx}`]: { newStopping },
+                    [`newScore.${idx}`]: { newScore },
+                    [`hodComment.${idx}`]: { hodComment },
+                    [`prevStarting.${idx}`]: { prevStarting },
+                    [`preStopping.${idx}`]: { preStopping },
+                    [`preScore.${idx}`]: { preScore },
+                    [`parentName.${idx}`]: { parentName },
+                    [`parentComment.${idx}`]: { parentComment },
+                    [`parentDate.${idx}`]: { parentDate }
+                }
+            },
+            { new: true }
+        );
+        
+        res.status(200).json(student);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const putSetStudent = async (req, res) => {
+    try {
+        const { _id ,object} = req.params;
+        const { CA1, CA2, Ass, Exam, } = req.body; // <-- Passing target data from body
+
+        const { year, term} = yearTearm(_id)
+        
+        // --- UPDATED: Setting Academic Scores using Dynamic Years ---
+        const student = await Portal.findOneAndUpdate(
+            { _id: _id, "academicYears.year": year }, // Match the student and the specific year block
+            { 
+                // Overwrite the first index (.0) of the specific term and subject
+                $set: { [`academicYears.$.${term}.${object}.0`]: { CA1, CA2, Ass, Exam } } 
+            },
+            { new: true }
+        );
+
+        if (!student) {
+            return res.status(404).json("Student or Year not found");
+        }
+        res.status(200).json(student);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+const deleteOneStudent = async (req, res) => {
+    try {
+        const { _id } = req.params;
+        const student = await Portal.findByIdAndDelete(_id);
+
+        if (!student) {
+            return res.status(404).json("Student not found");
+        }
+        res.status(200).json({ message: "Student deleted successfully", student });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports = {
+    getOneStudent,
+    getAllStudent,
+    postStudent,
+    putPullStudent,
+    putPushStudent,
+    putSetStudent,
+    putOneStudent,
+    deleteOneStudent,
+    putSetProgress
+};
