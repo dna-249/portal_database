@@ -110,7 +110,7 @@ const putPushStudent = async (req, res) => {
         parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,
     } = req.body;
 
-        const { year, term} = yearTearm(_id)
+        const { year, term} = yearTearm(id)
 
 
     try {
