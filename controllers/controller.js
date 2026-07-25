@@ -151,16 +151,33 @@ const putPushStudent = async (req, res) => {
                 }
             });
         } else if (weeks || terms || teacherComment || teacherName || teacherSign) {
-            await Portal.findByIdAndUpdate(id, {
-                $push: {
-                    [object]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
-                    weeks: { weeks },
-                    terms: { terms },
-                    teacherComment: { teacherComment },
-                    teacherName: { teacherName },
-                    teacherSign: { teacherSign }
-                }
-            });
+            // Assuming 'object' is a variable holding a string (e.g., 'subjects' or 'hifzRecords')
+// and you want to push that into the specific term of a specific year.
+
+await Portal.findByIdAndUpdate(
+    id, 
+    {
+    //     // 1. $push is only for arrays (assuming the dynamic [object] is an array in your schema)
+    //     $push: {
+    //         [`academicYears.${year}.${term}.${object}`]: { 
+    //             date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter 
+    //         }
+    //     },
+    //     // 2. $set is for updating standard string/number fields
+        $push: {
+            [`academicYears.${year}.${term}.weeks`]: weeks,
+            [`academicYears.${year}.${term}.terms`]: terms,
+            [`academicYears.${year}.${term}.teacherComment`]: teacherComment,
+            [`academicYears.${year}.${term}.teacherName`]: teacherName,
+            [`academicYears.${year}.${term}.teacherSign`]: teacherSign
+        }
+    },
+    {
+        // 3. arrayFilters tells MongoDB to find the element in the academicYears array 
+        // where the "year" matches your variable (e.g., "2025")
+        new: true // Optional: returns the updated document instead of the old one
+    }
+);
         } else {
             await Portal.findByIdAndUpdate(id, {
                 $push: {
