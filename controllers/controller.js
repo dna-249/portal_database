@@ -108,6 +108,7 @@ const putPushStudent = async (req, res) => {
         date, tajweed, weeks, terms, hifz, tajError, hifzError, toV, fromV, chapter,
         prevStarting, preStopping, preScore, newStarting, newStopping, newScore, hodComment,
         parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,
+        headRemark, classTeacherRemark
     } = req.body;
 
         const { year, term} = await yearTerm(id)
@@ -178,6 +179,23 @@ await Portal.findByIdAndUpdate(
         new: true // Optional: returns the updated document instead of the old one
     }
 );
+        }else if (headRemark || classTeacherRemark|| politeness || initiative|| moralEthics || punctuality || responsibility){
+            await Portal.findOneAndUpdate(id,{
+            $push:{
+                // moralEthics:  moralEthics,
+                // punctuality:punctuality,
+                // handWriting: handWriting,
+                // honesty: honesty,
+                // fluency: fluency,
+                // selfControl: selfControl,
+                // responsibility:responsibility,
+                // initiative:initiative,
+                // politeness: politeness,
+                [`academicYears.${year}.${term}.headRemark`]: headRemark,
+                [`academicYears.${year}.${term}.classTeacherRemark`]: classTeacherRemark
+            }
+            })
+
         } else {
             await Portal.findByIdAndUpdate(id, {
                 $push: {
@@ -236,12 +254,14 @@ const putSetProgress = async (req, res) => {
 const putSetStudent = async (req, res) => {
     try {
         const { _id ,object} = req.params;
-        const { CA1, CA2, Ass, Exam, } = req.body; // <-- Passing target data from body
+        const { CA1, CA2, Ass, Exam, headRemark,
+                 classTeacherRemark} = req.body; // <-- Passing target data from body
 
         const { year, term} = await yearTerm(_id)
         
         // --- UPDATED: Setting Academic Scores using Dynamic Years ---
-        const student = await Portal.findOneAndUpdate(
+        if (CA1 || CA2 || Ass || Exam){
+      const student = await Portal.findOneAndUpdate(
             { _id: _id }, // Match the student and the specific year block
             { 
                 // Overwrite the first index (.0) of the specific term and subject
@@ -255,6 +275,26 @@ const putSetStudent = async (req, res) => {
             return res.status(404).json("Student or Year not found");
         }
         res.status(200).json(student);
+        } else{
+            const student = await Portal.findOneAndUpdate(
+            { _id: _id }, // Match the student and the specific year block
+            { 
+                // Overwrite the first index (.0) of the specific term and subject
+                $set: { [`academicYears.${year}.${term}.headRemark`]: headRemark,
+                [`academicYears.${year}.${term}.classTeacherRemark`]: classTeacherRemark}
+
+            },
+            { new: true }
+        );
+
+        if (!student) {
+            return res.status(404).json("Student or Year not found");
+        }
+        res.status(200).json(student);
+        }
+        
+
+        
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
