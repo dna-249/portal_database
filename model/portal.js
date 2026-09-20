@@ -32,29 +32,7 @@ const mongoose = require("mongoose")
     teacherName:[{teacherName: {type:String}}], 
     teacherSign:[{ teacherSign: {type:String}}] ,
 
- }
 
-
- const studentData = mongoose.Schema({
-    school: {type:String},
-    studentName:{type:String},
-    class: {type:String},
-    term: {type:String},
-    session: {type:String},
-    admissionNo: {type:String},
-    age:{type:String},
-    sex: {type:String},
-    studentPhoto: {type:String},
-    password: {type:String},
-    payment:{type:String},
-
-    academicYears: [{
-        year: { type: String, required: true }, // e.g., "2026" or "2026/2027"
-        firstTerm: properties,
-        secondTerm: properties,
-        thirdTerm: properties
-    }],
-    
     mon:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String}, }],
     tue:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String},  }],
     wed:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String},  }],
@@ -77,7 +55,28 @@ const mongoose = require("mongoose")
     parentComment:[{parentComment: {type:String}}],
     parentDate:[{ parentDate: {type:String}}]
 
+ }
 
+
+ const studentData = mongoose.Schema({
+    school: {type:String},
+    studentName:{type:String},
+    class: {type:String},
+    term: {type:String},
+    session: {type:String},
+    admissionNo: {type:String},
+    age:{type:String},
+    sex: {type:String},
+    studentPhoto: {type:String},
+    password: {type:String},
+    payment:{type:String},
+
+    academicYears: [{
+        year: { type: String, required: true }, // e.g., "2026" or "2026/2027"
+        firstTerm: properties,
+        secondTerm: properties,
+        thirdTerm: properties
+    }],
 });
 
 const Portal = mongoose.model("portal",studentData)

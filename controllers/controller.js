@@ -179,18 +179,9 @@ await Portal.findByIdAndUpdate(
         new: true // Optional: returns the updated document instead of the old one
     }
 );
-        }else if (headRemark || classTeacherRemark|| politeness || initiative|| moralEthics || punctuality || responsibility){
+        }else if (headRemark || classTeacherRemark){
             await Portal.findOneAndUpdate(id,{
             $push:{
-                // moralEthics:  moralEthics,
-                // punctuality:punctuality,
-                // handWriting: handWriting,
-                // honesty: honesty,
-                // fluency: fluency,
-                // selfControl: selfControl,
-                // responsibility:responsibility,
-                // initiative:initiative,
-                // politeness: politeness,
                 [`academicYears.${year}.${term}.headRemark`]: headRemark,
                 [`academicYears.${year}.${term}.classTeacherRemark`]: classTeacherRemark
             }
@@ -217,29 +208,29 @@ const putSetProgress = async (req, res) => {
         const {
             date, tajweed, weeks, terms, hifz, tajError, hifzError, toV, fromV, chapter,
             prevStarting, preStopping, preScore, newStarting, newStopping, newScore, hodComment,
-            parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,
+            parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,year, term
         } = req.body;
 
         const student = await Portal.findOneAndUpdate(
             { _id: _id },
             {
                 $set: {
-                    [`${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
-                    [`weeks.${idx}`]: { weeks },
-                    [`terms.${idx}`]: { terms },
-                    [`teacherComment.${idx}`]: { teacherComment },
-                    [`teacherName.${idx}`]: { teacherName },
-                    [`teacherSign.${idx}`]: { teacherSign },
-                    [`newStarting.${idx}`]: { newStarting },
-                    [`newStopping.${idx}`]: { newStopping },
-                    [`newScore.${idx}`]: { newScore },
-                    [`hodComment.${idx}`]: { hodComment },
-                    [`prevStarting.${idx}`]: { prevStarting },
-                    [`preStopping.${idx}`]: { preStopping },
-                    [`preScore.${idx}`]: { preScore },
-                    [`parentName.${idx}`]: { parentName },
-                    [`parentComment.${idx}`]: { parentComment },
-                    [`parentDate.${idx}`]: { parentDate }
+                    [`academicYears.${year}.${term}.${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
+                    [`academicYears.${year}.${term}.weeks.${idx}`]: { weeks },
+                    [`academicYears.${year}.${term}.terms.${idx}`]: { terms },
+                    [`academicYears.${year}.${term}.teacherComment.${idx}`]: { teacherComment },
+                    [`academicYears.${year}.${term}.teacherName.${idx}`]: { teacherName },
+                    [`academicYears.${year}.${term}.teacherSign.${idx}`]: { teacherSign },
+                    [`academicYears.${year}.${term}.newStarting.${idx}`]: { newStarting },
+                    [`academicYears.${year}.${term}.newStopping.${idx}`]: { newStopping },
+                    [`academicYears.${year}.${term}.newScore.${idx}`]: { newScore },
+                    [`academicYears.${year}.${term}.hodComment.${idx}`]: { hodComment },
+                    [`academicYears.${year}.${term}.prevStarting.${idx}`]: { prevStarting },
+                    [`academicYears.${year}.${term}.preStopping.${idx}`]: { preStopping },
+                    [`academicYears.${year}.${term}.preScore.${idx}`]: { preScore },
+                    [`academicYears.${year}.${term}.parentName.${idx}`]: { parentName },
+                    [`academicYears.${year}.${term}.parentComment.${idx}`]: { parentComment },
+                    [`academicYears.${year}.${term}.parentDate.${idx}`]: { parentDate }
                 }
             },
             { new: true }
