@@ -134,22 +134,22 @@ const putPushStudent = async (req, res) => {
         else if (parentDate || parentComment || parentName) {
             await Portal.findByIdAndUpdate(id, {
                 $push: {
-                    parentName: { parentName },
-                    parentComment: { parentComment },
-                    parentDate: { parentDate }
-                }
+                        [`academicYears.${year}.${term}.parentName`]: { parentName },
+                        [`academicYears.${year}.${term}.parentComment`]: { parentComment },
+                        [`academicYears.${year}.${term}.parentDate`]: { parentDate }
+                                        }
             });
         } else if (newStarting || newStopping || newScore || hodComment) {
             await Portal.findByIdAndUpdate(id, {
                 $push: {
-                    newStarting: { newStarting },
-                    newStopping: { newStopping },
-                    newScore: { newScore },
-                    hodComment: { hodComment },
-                    prevStarting: { prevStarting },
-                    preStopping: { preStopping },
-                    preScore: { preScore },
-                }
+                        [`academicYears.${year}.${term}.newStarting`]: { newStarting },
+                        [`academicYears.${year}.${term}.newStopping`]: { newStopping },
+                        [`academicYears.${year}.${term}.newScore`]: { newScore },
+                        [`academicYears.${year}.${term}.hodComment`]: { hodComment },
+                        [`academicYears.${year}.${term}.prevStarting`]: { prevStarting },
+                        [`academicYears.${year}.${term}.preStopping`]: { preStopping },
+                        [`academicYears.${year}.${term}.preScore`]: { preScore },
+                                        }
             });
         } else if (weeks || terms || teacherComment || teacherName || teacherSign) {
             // Assuming 'object' is a variable holding a string (e.g., 'subjects' or 'hifzRecords')
@@ -190,7 +190,7 @@ await Portal.findByIdAndUpdate(
         } else {
             await Portal.findByIdAndUpdate(id, {
                 $push: {
-                    [object]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter }
+                    [`academicYears.${year}.${term}.${object}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter }
                 }
             });
         }
