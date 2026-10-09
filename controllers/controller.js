@@ -158,14 +158,11 @@ const putPushStudent = async (req, res) => {
 await Portal.findByIdAndUpdate(
     id, 
     {
-        // 1. $push is only for arrays (assuming the dynamic [object] is an array in your schema)
+       
         $push: {
             [`academicYears.${year}.${term}.${object}`]: { 
                 date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter 
-            }
-        },
-        // 2. $set is for updating standard string/number fields
-        $push: {
+            },
             [`academicYears.${year}.${term}.weeks`]: weeks,
             [`academicYears.${year}.${term}.terms`]: terms,
             [`academicYears.${year}.${term}.teacherComment`]: teacherComment,
