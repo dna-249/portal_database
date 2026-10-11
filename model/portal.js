@@ -35,7 +35,7 @@ const mongoose = require("mongoose")
     mon:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String} }],
     tue:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String} }],
     wed:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String} }],
-    thur:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String} }], 
+    thu:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String} }], 
     fri:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String} }], 
     sat:[{ date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String} }], 
     sun:[{  date: {type:String}, tajweed: {type:String}, hifz: {type:String}, tajError: {type:String}, hifzError: {type:String}, toV: {type:String}, fromV: {type:String}, chapter: {type:String} }], 
