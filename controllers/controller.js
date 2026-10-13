@@ -205,39 +205,55 @@ const putSetProgress = async (req, res) => {
         const {
             date, tajweed, weeks, terms, hifz, tajError, hifzError, toV, fromV, chapter,
             prevStarting, preStopping, preScore, newStarting, newStopping, newScore, hodComment,
-            parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,year, term
+            parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,
         } = req.body;
+        const { year, term} = await yearTerm(_id)
+
+
+        // Guardrail: Prevent updating if year or term are missing
+        if (!year || !term) {
+            return res.status(400).json({ message: "Missing required 'year' or 'term' in request body." });
+        }
+
+        const basePath = `academicYears.${year}.${term}`;
 
         const student = await Portal.findOneAndUpdate(
             { _id: _id },
             {
                 $set: {
-                    [`academicYears.${year}.${term}.${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
-                    [`academicYears.${year}.${term}.weeks.${idx}`]: { weeks },
-                    [`academicYears.${year}.${term}.terms.${idx}`]: { terms },
-                    [`academicYears.${year}.${term}.teacherComment.${idx}`]: { teacherComment },
-                    [`academicYears.${year}.${term}.teacherName.${idx}`]: { teacherName },
-                    [`academicYears.${year}.${term}.teacherSign.${idx}`]: { teacherSign },
-                    [`academicYears.${year}.${term}.newStarting.${idx}`]: { newStarting },
-                    [`academicYears.${year}.${term}.newStopping.${idx}`]: { newStopping },
-                    [`academicYears.${year}.${term}.newScore.${idx}`]: { newScore },
-                    [`academicYears.${year}.${term}.hodComment.${idx}`]: { hodComment },
-                    [`academicYears.${year}.${term}.prevStarting.${idx}`]: { prevStarting },
-                    [`academicYears.${year}.${term}.preStopping.${idx}`]: { preStopping },
-                    [`academicYears.${year}.${term}.preScore.${idx}`]: { preScore },
-                    [`academicYears.${year}.${term}.parentName.${idx}`]: { parentName },
-                    [`academicYears.${year}.${term}.parentComment.${idx}`]: { parentComment },
-                    [`academicYears.${year}.${term}.parentDate.${idx}`]: { parentDate }
+                    // Day progress logs (objects with daily metrics)
+                    [`${basePath}.${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
+                    
+                    // Auxiliary array fields (stored as plain values/strings)
+                    [`${basePath}.weeks.${idx}`]: weeks,
+                    [`${basePath}.terms.${idx}`]: terms,
+                    [`${basePath}.teacherComment.${idx}`]: teacherComment, // Saved as raw string, not { teacherComment }
+                    [`${basePath}.teacherName.${idx}`]: teacherName,       // Saved as raw string
+                    [`${basePath}.teacherSign.${idx}`]: teacherSign,       // Saved as raw string
+                    [`${basePath}.newStarting.${idx}`]: newStarting,
+                    [`${basePath}.newStopping.${idx}`]: newStopping,
+                    [`${basePath}.newScore.${idx}`]: newScore,
+                    [`${basePath}.hodComment.${idx}`]: hodComment,
+                    [`${basePath}.prevStarting.${idx}`]: prevStarting,
+                    [`${basePath}.preStopping.${idx}`]: preStopping,
+                    [`${basePath}.preScore.${idx}`]: preScore,
+                    [`${basePath}.parentName.${idx}`]: parentName,
+                    [`${basePath}.parentComment.${idx}`]: parentComment,
+                    [`${basePath}.parentDate.${idx}`]: parentDate
                 }
             },
             { new: true }
         );
-        
+
+        if (!student) {
+            return res.status(404).json({ message: "Student record not found." });
+        }
+
         res.status(200).json(student);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
 
 const putSetStudent = async (req, res) => {
     try {
