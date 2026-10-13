@@ -215,7 +215,7 @@ const putSetProgress = async (req, res) => {
             return res.status(400).json({ message: "Missing required 'year' or 'term' in request body." });
         }
 
-        const basePath = `academicYears.${year}.${term}`;
+        const basePath = `academicYears.0.${year}.${term}`;
 
         const student = await Portal.findOneAndUpdate(
             { _id: _id },
