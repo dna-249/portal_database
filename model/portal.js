@@ -42,10 +42,10 @@ const mongoose = require("mongoose")
         
     prevStarting: [{ prevStarting: {type:String}}],
     preStopping:[{preStopping: {type:String}}], 
-    preScore:[{ preScore: {type:Number}}],
+    preScore:[{ preScore: {type:String}}],
     newStarting:  [{newStarting: {type:String}}],
     newStopping:  [{newStopping: {type:String}}],
-    newScore:  [{ newScore: {type:Number}}],
+    newScore:  [{ newScore: {type:String}}],
     hodComment: [{ hodComment: {type:String}}],
 
     parentName:[{ parentName: {type:String}}],
