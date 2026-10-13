@@ -230,16 +230,16 @@ const putSetProgress = async (req, res) => {
                     [`${basePath}.teacherComment.${idx}`]: teacherComment, // Saved as raw string, not { teacherComment }
                     [`${basePath}.teacherName.${idx}`]: teacherName,       // Saved as raw string
                     [`${basePath}.teacherSign.${idx}`]: teacherSign,       // Saved as raw string
-                    [`${basePath}.newStarting.${idx}`]: newStarting,
-                    [`${basePath}.newStopping.${idx}`]: newStopping,
-                    [`${basePath}.newScore.${idx}`]: newScore,
-                    [`${basePath}.hodComment.${idx}`]: hodComment,
-                    [`${basePath}.prevStarting.${idx}`]: prevStarting,
-                    [`${basePath}.preStopping.${idx}`]: preStopping,
-                    [`${basePath}.preScore.${idx}`]: preScore,
-                    [`${basePath}.parentName.${idx}`]: parentName,
-                    [`${basePath}.parentComment.${idx}`]: parentComment,
-                    [`${basePath}.parentDate.${idx}`]: parentDate
+                    [`${basePath}.newStarting.${idx}`]: {newStarting},
+                    [`${basePath}.newStopping.${idx}`]:{ newStopping},
+                    [`${basePath}.newScore.${idx}`]: {newScore},
+                    [`${basePath}.hodComment.${idx}`]: {hodComment},
+                    [`${basePath}.prevStarting.${idx}`]: {prevStarting},
+                    [`${basePath}.preStopping.${idx}`]: {preStopping},
+                    [`${basePath}.preScore.${idx}`]: {preScore},
+                    [`${basePath}.parentName.${idx}`]: {parentName},
+                    [`${basePath}.parentComment.${idx}`]:{ parentComment},
+                    [`${basePath}.parentDate.${idx}`]:{ parentDate}
                 }
             },
             { new: true }
@@ -251,6 +251,7 @@ const putSetProgress = async (req, res) => {
 
         res.status(200).json(student);
     } catch (error) {
+        console.log(error.message)
         res.status(500).json({ message: error.message });
     }
 };
