@@ -53,7 +53,13 @@ const mongoose = require("mongoose")
     parentDate:[{ parentDate: {type:String}}]
 };
 
-
+const termsproperties= {
+ 
+            firstTerm: properties,
+            secondTerm: properties,
+            thirdTerm: properties
+        
+}
  const studentData = mongoose.Schema({
     school: {type:String},
     studentName:{type:String},
@@ -68,10 +74,13 @@ const mongoose = require("mongoose")
     payment:{type:String},
 
     academicYears: [{
-        year: { type: String, required: true }, // e.g., "2026" or "2026/2027"
-        firstTerm: properties,
-        secondTerm: properties,
-        thirdTerm: properties
+
+        2025:termsproperties,
+        2026:termsproperties,
+        2027:termsproperties,
+        2028:termsproperties,
+        2029:termsproperties,
+        2030:termsproperties
     }],
 });
 
