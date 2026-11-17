@@ -74,7 +74,6 @@ const termsproperties= {
     payment:{type:String},
 
     academicYears: [{
-
         2025:termsproperties,
         2026:termsproperties,
         2027:termsproperties,
