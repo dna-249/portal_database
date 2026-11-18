@@ -74,12 +74,31 @@ const termsproperties= {
     payment:{type:String},
 
     academicYears: [{
-        2025:termsproperties,
         2026:termsproperties,
         2027:termsproperties,
         2028:termsproperties,
         2029:termsproperties,
-        2030:termsproperties
+        2030:termsproperties,
+        2031:termsproperties,
+        2032:termsproperties,
+        2033:termsproperties,
+        2034:termsproperties,
+        2035:termsproperties,
+        2036:termsproperties,
+        2037:termsproperties,
+        2038:termsproperties,
+        2039:termsproperties,
+        2040:termsproperties,
+        2041:termsproperties,
+        2042:termsproperties,
+        2043:termsproperties,
+        2044:termsproperties,
+        2045:termsproperties,
+        2046:termsproperties,
+        2047:termsproperties,
+        2048:termsproperties,
+        2049:termsproperties,
+        2050:termsproperties
     }],
 });
 
