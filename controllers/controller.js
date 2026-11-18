@@ -122,7 +122,7 @@ const putPushStudent = async (req, res) => {
                 { _id: id }, // 1. Find the student AND the specific year
                 {
                     // 2. Use the $ operator to push into that specific year's term and subject array
-                    $push: { [`academicYears.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
+                    $push: { [`academicYears.0.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
                 },
                 { returnDocument: 'after' }
             );
@@ -160,17 +160,17 @@ await Portal.findByIdAndUpdate(
     {
     //     // 1. $push is only for arrays (assuming the dynamic [object] is an array in your schema)
     //     $push: {
-    //         [`academicYears.${year}.${term}.${object}`]: { 
+    //         [`academicYears.0.${year}.${term}.${object}`]: { 
     //             date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter 
     //         }
     //     },
     //     // 2. $set is for updating standard string/number fields
         $push: {
-            [`academicYears.${year}.${term}.weeks`]: weeks,
-            [`academicYears.${year}.${term}.terms`]: terms,
-            [`academicYears.${year}.${term}.teacherComment`]: teacherComment,
-            [`academicYears.${year}.${term}.teacherName`]: teacherName,
-            [`academicYears.${year}.${term}.teacherSign`]: teacherSign
+            [`academicYears.0.${year}.${term}.weeks`]: weeks,
+            [`academicYears.0.${year}.${term}.terms`]: terms,
+            [`academicYears.0.${year}.${term}.teacherComment`]: teacherComment,
+            [`academicYears.0.${year}.${term}.teacherName`]: teacherName,
+            [`academicYears.0.${year}.${term}.teacherSign`]: teacherSign
         }
     },
     {
@@ -182,8 +182,8 @@ await Portal.findByIdAndUpdate(
         }else if (headRemark || classTeacherRemark){
             await Portal.findOneAndUpdate(id,{
             $push:{
-                [`academicYears.${year}.${term}.headRemark`]: headRemark,
-                [`academicYears.${year}.${term}.classTeacherRemark`]: classTeacherRemark
+                [`academicYears.0.${year}.${term}.headRemark`]: headRemark,
+                [`academicYears.0.${year}.${term}.classTeacherRemark`]: classTeacherRemark
             }
             })
 
@@ -215,22 +215,22 @@ const putSetProgress = async (req, res) => {
             { _id: _id },
             {
                 $set: {
-                    [`academicYears.${year}.${term}.${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
-                    [`academicYears.${year}.${term}.weeks.${idx}`]: { weeks },
-                    [`academicYears.${year}.${term}.terms.${idx}`]: { terms },
-                    [`academicYears.${year}.${term}.teacherComment.${idx}`]: { teacherComment },
-                    [`academicYears.${year}.${term}.teacherName.${idx}`]: { teacherName },
-                    [`academicYears.${year}.${term}.teacherSign.${idx}`]: { teacherSign },
-                    [`academicYears.${year}.${term}.newStarting.${idx}`]: { newStarting },
-                    [`academicYears.${year}.${term}.newStopping.${idx}`]: { newStopping },
-                    [`academicYears.${year}.${term}.newScore.${idx}`]: { newScore },
-                    [`academicYears.${year}.${term}.hodComment.${idx}`]: { hodComment },
-                    [`academicYears.${year}.${term}.prevStarting.${idx}`]: { prevStarting },
-                    [`academicYears.${year}.${term}.preStopping.${idx}`]: { preStopping },
-                    [`academicYears.${year}.${term}.preScore.${idx}`]: { preScore },
-                    [`academicYears.${year}.${term}.parentName.${idx}`]: { parentName },
-                    [`academicYears.${year}.${term}.parentComment.${idx}`]: { parentComment },
-                    [`academicYears.${year}.${term}.parentDate.${idx}`]: { parentDate }
+                    [`academicYears.0.${year}.${term}.${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
+                    [`academicYears.0.${year}.${term}.weeks.${idx}`]: { weeks },
+                    [`academicYears.0.${year}.${term}.terms.${idx}`]: { terms },
+                    [`academicYears.0.${year}.${term}.teacherComment.${idx}`]: { teacherComment },
+                    [`academicYears.0.${year}.${term}.teacherName.${idx}`]: { teacherName },
+                    [`academicYears.0.${year}.${term}.teacherSign.${idx}`]: { teacherSign },
+                    [`academicYears.0.${year}.${term}.newStarting.${idx}`]: { newStarting },
+                    [`academicYears.0.${year}.${term}.newStopping.${idx}`]: { newStopping },
+                    [`academicYears.0.${year}.${term}.newScore.${idx}`]: { newScore },
+                    [`academicYears.0.${year}.${term}.hodComment.${idx}`]: { hodComment },
+                    [`academicYears.0.${year}.${term}.prevStarting.${idx}`]: { prevStarting },
+                    [`academicYears.0.${year}.${term}.preStopping.${idx}`]: { preStopping },
+                    [`academicYears.0.${year}.${term}.preScore.${idx}`]: { preScore },
+                    [`academicYears.0.${year}.${term}.parentName.${idx}`]: { parentName },
+                    [`academicYears.0.${year}.${term}.parentComment.${idx}`]: { parentComment },
+                    [`academicYears.0.${year}.${term}.parentDate.${idx}`]: { parentDate }
                 }
             },
             { new: true }
@@ -256,7 +256,7 @@ const putSetStudent = async (req, res) => {
             { _id: _id }, // Match the student and the specific year block
             { 
                 // Overwrite the first index (.0) of the specific term and subject
-                $set: { [`academicYears.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
+                $set: { [`academicYears.0.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
 
             },
             { new: true }
@@ -271,8 +271,8 @@ const putSetStudent = async (req, res) => {
             { _id: _id }, // Match the student and the specific year block
             { 
                 // Overwrite the first index (.0) of the specific term and subject
-                $set: { [`academicYears.${year}.${term}.headRemark`]: headRemark,
-                [`academicYears.${year}.${term}.classTeacherRemark`]: classTeacherRemark}
+                $set: { [`academicYears.0.${year}.${term}.headRemark`]: headRemark,
+                [`academicYears.0.${year}.${term}.classTeacherRemark`]: classTeacherRemark}
 
             },
             { new: true }
