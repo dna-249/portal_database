@@ -122,9 +122,9 @@ const putPushStudent = async (req, res) => {
                 { _id: id }, // 1. Find the student AND the specific year
                 {
                     // 2. Use the $ operator to push into that specific year's term and subject array
-                    $push: { [`academicYears.0.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
+                    $push: { [`academicYears.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
                 },
-                { new: true }
+                { returnDocument: 'after' }
             );
         console.log(test)
 
@@ -134,22 +134,22 @@ const putPushStudent = async (req, res) => {
         else if (parentDate || parentComment || parentName) {
             await Portal.findByIdAndUpdate(id, {
                 $push: {
-                        [`academicYears.0.${year}.${term}.parentName`]: { parentName },
-                        [`academicYears.0.${year}.${term}.parentComment`]: { parentComment },
-                        [`academicYears.0.${year}.${term}.parentDate`]: { parentDate }
-                                        }
+                    parentName: { parentName },
+                    parentComment: { parentComment },
+                    parentDate: { parentDate }
+                }
             });
         } else if (newStarting || newStopping || newScore || hodComment) {
             await Portal.findByIdAndUpdate(id, {
                 $push: {
-                        [`academicYears.0.${year}.${term}.newStarting`]: { newStarting },
-                        [`academicYears.0.${year}.${term}.newStopping`]: { newStopping },
-                        [`academicYears.0.${year}.${term}.newScore`]: { newScore },
-                        [`academicYears.0.${year}.${term}.hodComment`]: { hodComment },
-                        [`academicYears.0.${year}.${term}.prevStarting`]: { prevStarting },
-                        [`academicYears.0.${year}.${term}.preStopping`]: { preStopping },
-                        [`academicYears.0.${year}.${term}.preScore`]: { preScore },
-                                        }
+                    newStarting: { newStarting },
+                    newStopping: { newStopping },
+                    newScore: { newScore },
+                    hodComment: { hodComment },
+                    prevStarting: { prevStarting },
+                    preStopping: { preStopping },
+                    preScore: { preScore },
+                }
             });
         } else if (weeks || terms || teacherComment || teacherName || teacherSign) {
             // Assuming 'object' is a variable holding a string (e.g., 'subjects' or 'hifzRecords')
@@ -158,16 +158,19 @@ const putPushStudent = async (req, res) => {
 await Portal.findByIdAndUpdate(
     id, 
     {
-       
+    //     // 1. $push is only for arrays (assuming the dynamic [object] is an array in your schema)
+    //     $push: {
+    //         [`academicYears.${year}.${term}.${object}`]: { 
+    //             date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter 
+    //         }
+    //     },
+    //     // 2. $set is for updating standard string/number fields
         $push: {
-            [`academicYears.0.${year}.${term}.${object}`]: { 
-                date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter 
-            },
-            [`academicYears.0.${year}.${term}.weeks`]: weeks,
-            [`academicYears.0.${year}.${term}.terms`]: terms,
-            [`academicYears.0.${year}.${term}.teacherComment`]: teacherComment,
-            [`academicYears.0.${year}.${term}.teacherName`]: teacherName,
-            [`academicYears.0.${year}.${term}.teacherSign`]: teacherSign
+            [`academicYears.${year}.${term}.weeks`]: weeks,
+            [`academicYears.${year}.${term}.terms`]: terms,
+            [`academicYears.${year}.${term}.teacherComment`]: teacherComment,
+            [`academicYears.${year}.${term}.teacherName`]: teacherName,
+            [`academicYears.${year}.${term}.teacherSign`]: teacherSign
         }
     },
     {
@@ -179,15 +182,15 @@ await Portal.findByIdAndUpdate(
         }else if (headRemark || classTeacherRemark){
             await Portal.findOneAndUpdate(id,{
             $push:{
-                [`academicYears.0.${year}.${term}.headRemark`]: headRemark,
-                [`academicYears.0.${year}.${term}.classTeacherRemark`]: classTeacherRemark
+                [`academicYears.${year}.${term}.headRemark`]: headRemark,
+                [`academicYears.${year}.${term}.classTeacherRemark`]: classTeacherRemark
             }
             })
 
         } else {
             await Portal.findByIdAndUpdate(id, {
                 $push: {
-                    [`academicYears.0.${year}.${term}.${object}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter }
+                    [object]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter }
                 }
             });
         }
@@ -205,56 +208,39 @@ const putSetProgress = async (req, res) => {
         const {
             date, tajweed, weeks, terms, hifz, tajError, hifzError, toV, fromV, chapter,
             prevStarting, preStopping, preScore, newStarting, newStopping, newScore, hodComment,
-            parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,
+            parentName, parentComment, parentDate, teacherComment, teacherName, teacherSign,year, term
         } = req.body;
-        const { year, term} = await yearTerm(_id)
-
-
-        // Guardrail: Prevent updating if year or term are missing
-        if (!year || !term) {
-            return res.status(400).json({ message: "Missing required 'year' or 'term' in request body." });
-        }
-
-        const basePath = `academicYears.0.0.${year}.${term}`;
 
         const student = await Portal.findOneAndUpdate(
             { _id: _id },
             {
                 $set: {
-                    // Day progress logs (objects with daily metrics)
-                    [`${basePath}.${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
-                    
-                    // Auxiliary array fields (stored as plain values/strings)
-                    [`${basePath}.weeks.${idx}`]: weeks,
-                    [`${basePath}.terms.${idx}`]: terms,
-                    [`${basePath}.teacherComment.${idx}`]: teacherComment, // Saved as raw string, not { teacherComment }
-                    [`${basePath}.teacherName.${idx}`]: teacherName,       // Saved as raw string
-                    [`${basePath}.teacherSign.${idx}`]: teacherSign,       // Saved as raw string
-                    [`${basePath}.newStarting.${idx}`]: {newStarting},
-                    [`${basePath}.newStopping.${idx}`]:{ newStopping},
-                    [`${basePath}.newScore.${idx}`]: {newScore},
-                    [`${basePath}.hodComment.${idx}`]: {hodComment},
-                    [`${basePath}.prevStarting.${idx}`]: {prevStarting},
-                    [`${basePath}.preStopping.${idx}`]: {preStopping},
-                    [`${basePath}.preScore.${idx}`]: {preScore},
-                    [`${basePath}.parentName.${idx}`]: {parentName},
-                    [`${basePath}.parentComment.${idx}`]:{ parentComment},
-                    [`${basePath}.parentDate.${idx}`]:{ parentDate}
+                    [`academicYears.${year}.${term}.${object}.${idx}`]: { date, tajweed, hifz, tajError, hifzError, toV, fromV, chapter },
+                    [`academicYears.${year}.${term}.weeks.${idx}`]: { weeks },
+                    [`academicYears.${year}.${term}.terms.${idx}`]: { terms },
+                    [`academicYears.${year}.${term}.teacherComment.${idx}`]: { teacherComment },
+                    [`academicYears.${year}.${term}.teacherName.${idx}`]: { teacherName },
+                    [`academicYears.${year}.${term}.teacherSign.${idx}`]: { teacherSign },
+                    [`academicYears.${year}.${term}.newStarting.${idx}`]: { newStarting },
+                    [`academicYears.${year}.${term}.newStopping.${idx}`]: { newStopping },
+                    [`academicYears.${year}.${term}.newScore.${idx}`]: { newScore },
+                    [`academicYears.${year}.${term}.hodComment.${idx}`]: { hodComment },
+                    [`academicYears.${year}.${term}.prevStarting.${idx}`]: { prevStarting },
+                    [`academicYears.${year}.${term}.preStopping.${idx}`]: { preStopping },
+                    [`academicYears.${year}.${term}.preScore.${idx}`]: { preScore },
+                    [`academicYears.${year}.${term}.parentName.${idx}`]: { parentName },
+                    [`academicYears.${year}.${term}.parentComment.${idx}`]: { parentComment },
+                    [`academicYears.${year}.${term}.parentDate.${idx}`]: { parentDate }
                 }
             },
             { new: true }
         );
-
-        if (!student) {
-            return res.status(404).json({ message: "Student record not found." });
-        }
-
+        
         res.status(200).json(student);
     } catch (error) {
-        console.log(error.message)
         res.status(500).json({ message: error.message });
     }
-};
+}
 
 const putSetStudent = async (req, res) => {
     try {
@@ -270,7 +256,7 @@ const putSetStudent = async (req, res) => {
             { _id: _id }, // Match the student and the specific year block
             { 
                 // Overwrite the first index (.0) of the specific term and subject
-                $set: { [`academicYears.0.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
+                $set: { [`academicYears.${year}.${term}.${object}`]: { CA1, CA2, Ass, Exam}}
 
             },
             { new: true }
@@ -285,8 +271,8 @@ const putSetStudent = async (req, res) => {
             { _id: _id }, // Match the student and the specific year block
             { 
                 // Overwrite the first index (.0) of the specific term and subject
-                $set: { [`academicYears.0.${year}.${term}.headRemark`]: headRemark,
-                [`academicYears.0.${year}.${term}.classTeacherRemark`]: classTeacherRemark}
+                $set: { [`academicYears.${year}.${term}.headRemark`]: headRemark,
+                [`academicYears.${year}.${term}.classTeacherRemark`]: classTeacherRemark}
 
             },
             { new: true }
